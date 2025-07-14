@@ -7,6 +7,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\MenuController;
 
 Route::get('/', function () {
     return view('home');
@@ -28,3 +29,4 @@ Route::get('/kontak', function () {
 Route::resource('contacts', ContactController::class);
 Route::resource('downloads', DownloadController::class);
 Route::resource('galleries', GalleryController::class)->middleware(['auth']);
+Route::resource('menus', MenuController::class);
