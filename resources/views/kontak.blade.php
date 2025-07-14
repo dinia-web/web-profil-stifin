@@ -1,6 +1,4 @@
-@extends('home')
 
-@section('content')
 <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
       <div class="container">
@@ -77,4 +75,4 @@
 
       </div>
     </section><!-- End Contact Section -->
-    @endsection
+  

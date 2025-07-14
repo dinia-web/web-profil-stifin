@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\KategoriController;
-
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('home');
@@ -23,3 +23,4 @@ Route::resource('infos', InfoController::class);
 Route::get('/kontak', function () {
     return view('kontak');
 })->name('kontak');
+Route::resource('contacts', ContactController::class);
