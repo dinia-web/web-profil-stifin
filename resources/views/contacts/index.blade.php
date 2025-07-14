@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h3 class="mb-3">Daftar Kontak</h3>
-    <a href="{{ route('contacts.create') }}" class="btn btn-primary mb-3">Form</a>
+    <a href="{{ route('contacts.create') }}" class="btn btn-primary mb-3">Hubungi Kami</a>
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

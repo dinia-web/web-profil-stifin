@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\GalleryController;
 
 Route::get('/', function () {
     return view('home');
@@ -24,3 +26,5 @@ Route::get('/kontak', function () {
     return view('kontak');
 })->name('kontak');
 Route::resource('contacts', ContactController::class);
+Route::resource('downloads', DownloadController::class);
+Route::resource('galleries', GalleryController::class)->middleware(['auth']);

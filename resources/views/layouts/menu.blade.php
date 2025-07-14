@@ -27,10 +27,10 @@ Manajemen Informasi
 <a href="#" class="list-group-item list-group-item-action">
 Halaman Statis
 </a>
-<a href="#" class="list-group-item list-group-item-action">
+<a href="{{ route('galleries.index') }}" class="list-group-item list-group-item-action">
 Galeri
 </a>
-<a href="#" class="list-group-item list-group-item-action">
+<a href="{{ route('downloads.index') }}" class="list-group-item list-group-item-action">
 File Download
 </a>
 <a href="{{ route('contacts.index') }}" class="list-group-item list-group-item-action">
