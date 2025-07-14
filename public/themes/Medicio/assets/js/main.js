@@ -187,31 +187,47 @@
   /**
    * Testimonials slider
    */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
+    var swiper = new Swiper(".testimonials-slider", {
+    slidesPerView: 1,
     loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
     pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
+      el: ".swiper-pagination",
+      clickable: true,
     },
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 20
-      },
-
-      1200: {
-        slidesPerView: 3,
-        spaceBetween: 20
-      }
-    }
+    navigation: {
+      nextEl: ".custom-next",
+      prevEl: ".custom-prev",
+    },
   });
+
+
+  /**
+   * artikel Slider
+   */
+  const artikelSwiper = new Swiper('.artikels-slider', {
+  loop: true,
+  spaceBetween: 30,
+  slidesPerView: 3,
+  autoplay: {
+    delay: 4000,
+    disableOnInteraction: false,
+  },
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+  breakpoints: {
+    0: {
+      slidesPerView: 1,
+    },
+    768: {
+      slidesPerView: 2,
+    },
+    1024: {
+      slidesPerView: 3,
+    }
+  }
+});
 
   /**
    * Clients Slider
