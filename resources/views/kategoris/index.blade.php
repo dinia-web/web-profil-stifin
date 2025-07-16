@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('title', 'Data Kategori')
 
@@ -6,16 +6,15 @@
 <div class="container mt-4">
 <h3 class="mb-4">Daftar Kategori</h3>
 
-@if (session('success'))
+{{-- Notifikasi sukses --}}
+@if(session('success'))
 <div class="alert alert-success">{{ session('success') }}</div>
-
 @endif
 
 <a href="{{ route('kategoris.create') }}" class="btn btn-primary mb-3">+ Tambah
 Kategori</a>
 
-<table class="table table-bordered table-striped">
-<thead class="table-dark">
+<table class="table table-bordered">
 <tr>
 <th style="width: 50px;">No</th>
 <th>Nama Kategori</th>

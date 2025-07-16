@@ -1,13 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
-    <h3>Manajemen Galeri</h3>
-    <a href="{{ route('galleries.create') }}" class="btn btn-primary mb-3">+ Tambah Galeri</a>
+    <h3 class="mb-4">Manajemen Galeri</h3>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+{{-- Notifikasi sukses --}}
+@if(session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+    <a href="{{ route('galleries.create') }}" class="btn btn-primary mb-3">+ Tambah Galeri</a>
 
     <table class="table table-bordered">
         <thead>

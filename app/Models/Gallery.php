@@ -2,18 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Gallery extends Model
 {
-    protected $fillable = [
-        'title', 'slug', 'description', 'image_path', 'category_id',
-        'album_id', 'uploader', 'status', 'taken_at', 'is_featured'
-    ];
+    use HasFactory;
 
-    protected $casts = [
-        'taken_at' => 'date',
-        'is_featured' => 'boolean',
+    protected $fillable = [
+        'title',
+        'slug',
+        'description',
+        'image_path',
+        'category_id',
+        'album_id',
+        'uploader',
+        'status',
+        'taken_at',
+        'is_featured'
     ];
 
     public function category()
@@ -23,7 +29,6 @@ class Gallery extends Model
 
     public function album()
     {
-        return $this->belongsTo(Album::class, 'album_id');
+        return $this->belongsTo(Album::class);
     }
 }
-

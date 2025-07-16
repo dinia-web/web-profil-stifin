@@ -12,6 +12,7 @@ use HasFactory;
 protected $fillable = [
 'kategori_id',
 'judul',
+'slug',
 'isi',
 'gambar',
 ];

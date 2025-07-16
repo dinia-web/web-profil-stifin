@@ -1,13 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
-    <h3>Manajemen Download</h3>
-    <a href="{{ route('downloads.create') }}" class="btn btn-primary mb-3">+ Upload File</a>
+    <h3 class="mb-4">Manajemen Download</h3>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+{{-- Notifikasi sukses --}}
+@if(session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+    <a href="{{ route('downloads.create') }}" class="btn btn-primary mb-3">+ Upload File</a>
 
     <table class="table table-bordered">
         <thead>
@@ -23,6 +25,7 @@
                 <td>{{ ucfirst($d->status) }}</td>
                 <td>{{ $d->download_count }}</td>
                 <td>
+                    <a href="{{ route('downloads.edit', $d->id) }}" class="btn btn-sm btn-warning">Edit</a>
                     <a href="{{ asset($d->file_path) }}" target="_blank" class="btn btn-sm btn-success">Lihat</a>
                     <form action="{{ route('downloads.destroy', $d->id) }}" method="POST" class="d-inline">
                         @csrf @method('DELETE')

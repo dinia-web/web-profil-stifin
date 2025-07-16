@@ -1,13 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
-    <h3>Manajemen Menu</h3>
-    <a href="{{ route('menus.create') }}" class="btn btn-primary mb-3">Tambah Menu</a>
+    <h3 class="mb-4">Manajemen Menu</h3>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+{{-- Notifikasi sukses --}}
+@if(session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+    <a href="{{ route('menus.create') }}" class="btn btn-primary mb-3">+ Tambah Menu</a>
 
     <table class="table table-bordered">
         <thead>

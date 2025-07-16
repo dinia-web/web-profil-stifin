@@ -1,15 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
-    <h3>Edit File: {{ $download->title }}</h3>
+    <h4>Edit File Download</h4>
 
-    <form action="{{ route('downloads.update', $download->id) }}" method="POST">
-        @csrf @method('PUT')
+    <form action="{{ route('downloads.update', $download->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
         <div class="mb-3">
             <label>Judul</label>
-            <input type="text" name="title" class="form-control" value="{{ $download->title }}" required>
+            <input type="text" name="title" class="form-control" value="{{ old('title', $download->title) }}" required>
         </div>
 
         <div class="mb-3">
@@ -26,32 +27,25 @@
 
         <div class="mb-3">
             <label>Deskripsi</label>
-            <textarea name="description" class="form-control">{{ $download->description }}</textarea>
+            <textarea name="description" class="form-control">{{ old('description', $download->description) }}</textarea>
         </div>
 
         <div class="mb-3">
-            <label>File Path</label>
-            <input type="text" name="file_path" class="form-control" value="{{ $download->file_path }}" required>
+            <label>Upload File (kosongkan jika tidak ingin ganti)</label>
+            <input type="file" name="file" class="form-control">
+            @if($download->file_path)
+                <small>File saat ini: <a href="{{ asset('storage/' . $download->file_path) }}" target="_blank">{{ basename($download->file_path) }}</a></small>
+            @endif
         </div>
 
         <div class="mb-3">
-            <label>Jenis File</label>
-            <input type="text" name="file_type" class="form-control" value="{{ $download->file_type }}">
-        </div>
-
-        <div class="mb-3">
-            <label>Ukuran File (byte)</label>
-            <input type="number" name="file_size" class="form-control" value="{{ $download->file_size }}">
-        </div>
-
-        <div class="mb-3">
-            <label>Uploader</label>
-            <input type="text" name="uploader" class="form-control" value="{{ $download->uploader }}">
+            <label>Nama Pengunggah</label>
+            <input type="text" name="uploader" class="form-control" value="{{ old('uploader', $download->uploader) }}">
         </div>
 
         <div class="mb-3">
             <label>Status</label>
-            <select name="status" class="form-control" required>
+            <select name="status" class="form-control">
                 <option value="draft" {{ $download->status == 'draft' ? 'selected' : '' }}>Draft</option>
                 <option value="published" {{ $download->status == 'published' ? 'selected' : '' }}>Published</option>
                 <option value="archived" {{ $download->status == 'archived' ? 'selected' : '' }}>Archived</option>
@@ -59,6 +53,8 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{{ route('downloads.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
 @endsection
+

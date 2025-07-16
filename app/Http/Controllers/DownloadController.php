@@ -48,6 +48,12 @@ public function store(Request $request)
 
     return redirect()->route('downloads.index')->with('success', 'Berhasil diunggah.');
 }
+public function edit(Download $download)
+{
+    $categories = DownloadCategory::all();
+    return view('downloads.edit', compact('download', 'categories'));
+}
+
 
 public function destroy($id)
 {

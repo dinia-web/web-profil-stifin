@@ -1,13 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
-    <h3 class="mb-3">Daftar Kontak</h3>
-    <a href="{{ route('contacts.create') }}" class="btn btn-primary mb-3">Hubungi Kami</a>
+    <h3 class="mb-4">Daftar Kontak</h3>
 
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+{{-- Notifikasi sukses --}}
+@if(session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+    <a href="{{ route('contacts.create') }}" class="btn btn-primary mb-3">Hubungi Kami</a>
 
     <table class="table table-bordered">
         <thead>
@@ -27,7 +29,7 @@
                     <td>{{ ucfirst($contact->status) }}</td>
                     <td>{{ $contact->created_at->format('d-m-Y') }}</td>
                     <td>
-                        <a href="{{ route('contacts.show', $contact->id) }}" class="btn btn-sm btn-info">Lihat</a>
+                        <a href="{{ route('contacts.show', $contact->id) }}" class="btn btn-sm btn-success">Lihat</a>
                         <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin hapus?')">
                             @csrf @method('DELETE')
                             <button class="btn btn-sm btn-danger">Hapus</button>

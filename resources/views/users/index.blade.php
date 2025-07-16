@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('title', 'Manajemen User')
 
 @section('content')
 <div class="container mt-4">
-<h2>Manajemen User</h2>
+<h2 class="mb-4">Manajemen User</h2>
 
 {{-- Notifikasi sukses --}}
 @if(session('success'))
@@ -19,8 +19,7 @@
 {{-- Tabel Data User --}}
 
 <div class="table-responsive">
-<table class="table table-bordered table-striped">
-<thead class="table-dark">
+<table class="table table-bordered">
 <tr>
 <th width="5%">No</th>
 <th>Nama</th>

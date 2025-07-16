@@ -80,31 +80,51 @@
     </div>
   </header><!-- End Header -->
 
-  <!-- ======= Hero Section ======= -->
-<section id="hero" style="background-color: #F6F6F6;">
-  <div class="container">
-    <div class="row align-items-center">
-      
-      <!-- Kolom Kiri: Teks -->
-      <div class="col-lg-6 order-2 order-lg-1">
-        <h2 class="fw-bold mb-3">Temukan Karpet Merah Kehidupan Terbaikmu dengan <span style="color: #3F5771;">STIFIn</span></h2>
-        <p class="mb-4">
-          STIFIn merupakan konsep tentang fungsi otak dominan yang menjadi sistem operasi pada otak manusia 
-          (Sensing, Thinking, Intuiting, Feeling dan Insting) untuk mengetahui jenis kecerdasan dan personaliti seseorang.
-        </p>
-        <a href="#about" class="btn-get-started">Pelajari Lebih Lanjut</a>
+<!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+      <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+      <div class="carousel-inner" role="listbox">
+
+        <!-- Slide 1 -->
+        <div class="carousel-item active" style="background-image: url(/themes/medicio/assets/img/slide/slide-1.jpg)">
+          <div class="container">
+            <h2>Temukan Karpet Merah Kehidupan Terbaikmu dengan STIFIn</h2>
+            <p> STIFIn merupakan konsep tentang fungsi otak dominan yang menjadi sistem operasi pada otak manusia 
+                (Sensing, Thinking, Intuiting, Feeling dan Insting) untuk mengetahui jenis kecerdasan dan personaliti seseorang.</p>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item" style="background-image: url(/themes/medicio/assets/img/slide/slide-2.jpg)">
+          <div class="container">
+            <h2>Akademi Entrepreneur oleh STIFIn</h2>
+            <p>Akademi Entrepreneur adalah program penggemblengan intensif dari Jamil Azzaini dan Tim untuk memiliki skill Entrepreneur, Leader, dan Manager  dengan menjadi Branch Manager STIFIn.</p>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item" style="background-image: url(/themes/medicio/assets/img/slide/slide-3.jpg)">
+          <div class="container">
+            <h2>Workshop STIFIn Parenting</h2>
+            <p>Temukan kekuatan anda, temukan kelebihan anda... Temukan potensi terbaik anda melalui Konsep STIFIn. Sebuah konsep untuk bisa sukses dalam banyak bidang.</p>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Kolom Kanan: Gambar -->
-      <div class="col-lg-6 order-1 order-lg-2 text-center">
-  <div class="hero-img-zoom">
-    <img src="/themes/medicio/assets/img/slide/slide-1.jpg" alt="Gambar STIFIn" class="img-fluid">
-        </div>
-      </div>
+      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+      </a>
+
+      <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+      </a>
+
     </div>
-  </div>
-</section>
-<!-- End Hero -->
+  </section><!-- End Hero -->
 
      <!-- ======= whych choose stifin ======= -->
    <section id="whych" class="whych">

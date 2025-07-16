@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('layouts.master')
 @section('title', 'Tambah User')
 
 @section('content')
@@ -51,8 +50,8 @@
 <input type="password" name="password_confirmation" class="form-control" required minlength="6">
 </div>
 
-<a href="{{ route('users.index') }}" class="btn btn-secondary">Batal</a>
 <button type="submit" class="btn btn-primary">Simpan</button>
+<a href="{{ route('users.index') }}" class="btn btn-secondary">Batal</a>
 </form>
 </div>
 

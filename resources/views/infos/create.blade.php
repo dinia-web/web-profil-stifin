@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
@@ -28,7 +28,7 @@
 </select>
 </div>
 
-<button type="submit" class="btn btn-success">Simpan</button>
+<button type="submit" class="btn btn-primary">Simpan</button>
 <a href="{{ route('infos.index') }}" class="btn btn-secondary">Batal</a>
 </form>
 </div>

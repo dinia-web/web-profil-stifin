@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('title', 'Edit Kategori')
 
@@ -34,8 +34,8 @@ value="{{ old('nama', $kategori->nama) }}" required>
 rows="3">{{ old('deskripsi', $kategori->deskripsi) }}</textarea>
 </div>
 
+<button class="btn btn-primary">Update</button>
 <a href="{{ route('kategoris.index') }}" class="btn btn-secondary">Batal</a>
-<button type="submit" class="btn btn-success">Perbarui</button>
 </form>
 </div>
 @endsection
