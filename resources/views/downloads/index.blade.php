@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+@section('title', 'Manajemen Download')
 @section('content')
 <div class="container">
     <h3 class="mb-4">Manajemen Download</h3>

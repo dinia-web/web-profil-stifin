@@ -18,7 +18,12 @@ protected $fillable = [
 ];
 
 public function kategori()
-{
-return $this->belongsTo(Kategori::class);
-}
+    {
+        return $this->belongsTo(Kategori::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'info_tag');
+    }
 }

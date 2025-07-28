@@ -519,7 +519,7 @@ h6 {
   background: rgba(45, 72, 90, 0.8);
   border-radius: 50px;
   transition: 0.3s;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.822);
   width: 54px;
   height: 54px;
   display: flex;
@@ -530,7 +530,7 @@ h6 {
 #hero .carousel-control-next-icon:hover,
 #hero .carousel-control-prev-icon:hover {
   background: #3F5771;
-  color: rgba(255, 255, 255, 0.8);
+  color:rgba(255, 255, 255, 0.822);
 }
 
 #hero .carousel-indicators li {
@@ -988,7 +988,7 @@ section {
 }
 
 .testimonials .testimonial-item {
-  background-color: #e0f3ff;
+  background-color: #F6F6F6;
   padding: 40px 60px;
   border-radius: 10px;
   text-align: center;
@@ -997,11 +997,14 @@ section {
 }
 
 .testimonials .testimonial-img {
-  width: 90px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
   border-radius: 50%;
   border: 6px solid #fff;
   margin-top: 30px;
 }
+
 
 .testimonials .testimonial-item h3 {
   font-size: 18px;
@@ -1219,7 +1222,6 @@ section {
   overflow: hidden;
 }
 
-
 .artikel-card:hover {
   transform: scale(1.03);
 }
@@ -1270,49 +1272,6 @@ section {
 
 .artikels .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #3F5771;
-}
-
-/*--------------------------------------------------------------
-# Gallery
---------------------------------------------------------------*/
-.gallery {
-  overflow: hidden;
-}
-
-.gallery .swiper-pagination {
-  margin-top: 20px;
-  position: relative;
-}
-
-.gallery .swiper-pagination .swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
-  background-color: #fff;
-  opacity: 1;
-  border: 1px solid #3F5771;
-}
-
-.gallery .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #3F5771;
-}
-
-.gallery .swiper-slide-active {
-  text-align: center;
-}
-
-@media (min-width: 992px) {
-  .gallery .swiper-wrapper {
-    padding: 40px 0;
-  }
-
-  .gallery .swiper-slide-active {
-    border: 6px solid #3F5771;
-    padding: 4px;
-    background: #fff;
-    z-index: 1;
-    transform: scale(1.2);
-    margin-top: 10px;
-  }
 }
 
 /*--------------------------------------------------------------
@@ -1424,6 +1383,9 @@ section {
 
 .contact .php-email-form button[type=submit]:hover {
   background: #597da3;
+}
+.d-block {
+  display: block !important;
 }
 
 @keyframes animate-loading {
@@ -1599,5 +1561,478 @@ section {
 }
 #footer .copyright,
 #footer .credits {
-  color: #3F5771; /* Ganti dengan warna biru yang kamu mau */
+  color: #3F5771;
 }
+
+
+/*--------------------------------------------------------------
+# Breadcrumbs
+--------------------------------------------------------------*/
+.breadcrumbs {
+  padding: 35px 0;
+  background: #f8f9fa;
+  text-align: center;
+}
+
+.breadcrumbs h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* Breadcrumb wrapper */
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  background: none;
+  padding: 0;
+  margin-bottom: 0;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.breadcrumb li+li::before {
+  content: " ~ ";
+  padding: 0 2px;
+  color: #949494;
+}
+
+.breadcrumb a {
+  color: #949494;
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.breadcrumb a:hover {
+  color: #597da3;
+  text-decoration: none;
+}
+
+.breadcrumb a.active {
+  color: #3F5771;
+  pointer-events: none;
+  cursor: default;
+  font-weight: 500;
+}
+
+/* ====================
+   Responsive (mobile)
+==================== */
+@media (max-width: 576px) {
+  .breadcrumbs h2 {
+    font-size: 20px;
+  }
+
+  .breadcrumb {
+    font-size: 14px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 0px 10px;
+  }
+   .breadcrumbs {
+    padding-top: 80px; /* agar tidak ketutup navbar */
+  }
+  .breadcrumb {
+    font-size: 14px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 0px 10px;
+    word-break: break-word;
+  }
+
+  .breadcrumb a {
+    white-space: normal; /* biar teks bisa turun baris */
+  }
+}
+/* Ukuran layar sedang */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .breadcrumbs {
+    padding-top: 80px;
+  }
+}
+
+/* Ukuran layar kecil */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .breadcrumbs {
+    padding-top: 80px;
+  }
+}
+
+/* Ukuran layar sangat kecil (HP) */
+@media (max-width: 575.98px) {
+  .breadcrumbs {
+    padding-top: 80px;
+  }
+}
+/* galeri */
+.swiper {
+    width: 100%;
+    height: auto;
+  }
+  .swiper-slide img {
+  width: 100%;
+  height: 250px; /* ganti sesuai keinginan, misal 200px atau 300px */
+  object-fit: cover;
+  border-radius: 10px;
+}
+/* Atur ukuran, bentuk, dan posisi panah */
+.swiper-button-next,
+.swiper-button-prev {
+   color: rgba(255, 255, 255, 0.822);
+  background: rgba(45, 72, 90, 0.8);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  top: 60%;
+  transform: translateY(-50%);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Efek hover */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+   background: #597da3;
+  color: rgba(255, 255, 255, 0.822);
+}
+
+/* Ikon panah lebih tebal */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/*--------------------------------------------------------------
+# Services
+--------------------------------------------------------------*/
+.services .icon-box {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.services .icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.5s;
+  color: #3f5771;
+  overflow: hidden;
+  box-shadow: 0px 0 25px rgba(0, 0, 0, 0.15);
+}
+
+.services .icon i {
+  font-size: 36px;
+  line-height: 0;
+}
+
+.services .icon-box:hover .icon {
+  box-shadow: 0px 0 25px rgba(63, 187, 192, 0.3);
+}
+
+.services .title {
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 18px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.services .title a {
+  color: #444444;
+  transition: 0.3s;
+}
+
+.services .title a:hover {
+  color: #597da3;
+}
+
+.services .title::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 2px;
+  background: #3f5771;
+  bottom: 0;
+  left: calc(50% - 25px);
+}
+
+.services .description {
+  line-height: 24px;
+  font-size: 14px;
+}
+
+/*--------------------------------------------------------------
+# About Us
+--------------------------------------------------------------*/
+.about .content h3 {
+  font-weight: 600;
+  font-size: 26px;
+}
+
+.about .content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about .content ul li {
+  padding-bottom: 10px;
+}
+
+.about .content ul i {
+  font-size: 20px;
+  padding-right: 4px;
+  color: #3f5771;
+}
+
+.about .content p:last-child {
+  margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# Doctors
+--------------------------------------------------------------*/
+.doctors .member {
+  margin-bottom: 20px;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0px 2px 15px rgba(63, 187, 192, 0.1);
+}
+
+.doctors .member .member-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.doctors .member .social {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 40px;
+  opacity: 0;
+  transition: ease-in-out 0.3s;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doctors .member .social a {
+  transition: color 0.3s;
+  color: #555555;
+  margin: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doctors .member .social a i {
+  line-height: 0;
+}
+
+.doctors .member .social a:hover {
+  color: #597da3;
+}
+
+.doctors .member .social i {
+  font-size: 18px;
+  margin: 0 2px;
+}
+
+.doctors .member .member-info {
+  padding: 25px 15px;
+}
+
+.doctors .member .member-info h4 {
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: #555555;
+}
+
+.doctors .member .member-info span {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: #aaaaaa;
+}
+
+.doctors .member .member-info p {
+  font-style: italic;
+  font-size: 14px;
+  line-height: 26px;
+  color: #777777;
+}
+
+.doctors .member:hover .social {
+  opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Frequently Asked Questioins
+--------------------------------------------------------------*/
+.faq {
+  padding: 60px 0;
+}
+
+.faq .faq-list {
+  padding: 0;
+  list-style: none;
+}
+
+.faq .faq-list li {
+  border-bottom: 1px solid #d9f1f2;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.faq .faq-list .question {
+  display: block;
+  position: relative;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 400;
+  padding-left: 25px;
+  cursor: pointer;
+  color: #3f5771;
+  transition: 0.3s;
+}
+
+.faq .faq-list i {
+  font-size: 16px;
+  position: absolute;
+  left: 0;
+  top: -2px;
+}
+
+.faq .faq-list p {
+  margin-bottom: 0;
+  padding: 10px 0 0 25px;
+}
+
+.faq .faq-list .collapsed {
+  color: black;
+}
+
+.faq .faq-list .collapsed:hover {
+  color: #597da3;
+}
+
+.faq .faq-list .collapsed .icon-show {
+  display: inline-block;
+  transition: 0.6s;
+}
+
+.faq .faq-list .collapsed .icon-close {
+  display: none;
+}
+
+/*--------------------------------------------------------------
+# Formulir Pendaftaran Tes STIFIn
+--------------------------------------------------------------*/
+
+#form .container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+#form h5 {
+  font-weight: 600;
+  color: #333;
+}
+
+#form form {
+  margin-top: 15px;
+}
+
+#form .form-control,
+#form .form-select {
+  border-radius: 6px;
+  box-shadow: none;
+  border: 1px solid #ced4da;
+  font-size: 14px;
+}
+
+#form .form-label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+#form textarea.form-control {
+  resize: none;
+}
+
+#form .alert {
+  font-size: 13px;
+  padding: 10px 15px;
+  border-radius: 6px;
+}
+
+#form .alert-info {
+  background-color: #eaf7ff;
+  border-color: #b6e4f9;
+  color: #0c5460;
+}
+
+#form .alert-warning {
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  color: #856404;
+}
+
+#form .btn-primary {
+  background-color: #3F5771;
+  border-color: #3f5771;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+#form .btn-primary:hover {
+  background-color: #597da3;
+  border-color: #597da3;
+}
+
+.btn-whatsapp {
+  background-color: #25d366;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.btn-whatsapp:hover {
+  background-color: #1ebe5d;
+}
+
+.bank-logo {
+  height: 30px;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+.bank-logo:hover {
+  opacity: 1;
+}
+.kontak-bantuan {
+  color: #3f5771; 
+  font-weight: 700;
+  text-align: center;
+}
+
+

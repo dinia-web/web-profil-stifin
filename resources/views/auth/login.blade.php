@@ -36,8 +36,8 @@
                             <div class="w-100">
                                 <div class="d-flex flex-column h-100">
                                     <div class="mb-4 mb-md-5 text-center">
-                                        <a href="index.html" class="d-block auth-logo">
-                                           <img src="{{ asset('themes/minia/assets/images/logo-sm.svg') }}" alt="" height="28">
+                                        <a href="dashboard" class="d-block auth-logo">
+                                           <img src="{{ asset('themes/minia/assets/images/logo.png') }}" alt="" height="50">
                                         </a>
                                     </div>
                                     <div class="auth-content my-auto">

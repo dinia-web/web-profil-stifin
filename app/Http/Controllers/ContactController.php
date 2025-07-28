@@ -42,7 +42,7 @@ public function store(Request $request)
         'status' => 'new',
     ]);
 
-    return redirect()->back()->with('success', 'Pesan Anda telah terkirim!');
+    return response('OK', 200);
 }
 
 
@@ -51,4 +51,9 @@ public function store(Request $request)
         $contact->delete();
         return redirect()->route('contacts.index')->with('success', 'Pesan berhasil dihapus.');
     }
+    public function formKontak()
+{
+    return view('kontak');
+}
+
 }

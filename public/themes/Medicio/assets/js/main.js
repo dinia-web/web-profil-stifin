@@ -287,3 +287,28 @@
   new PureCounter();
 
 })()
+
+/**
+   * galeri
+   */
+const swiper1 = new Swiper(".galeriSwiper1", {
+    loop: true,
+    autoplay: {
+      delay: 4000,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next-1",
+      prevEl: ".swiper-button-prev-1",
+    },
+  });
+
+  const swiper2 = new Swiper(".galeriSwiper2", {
+    loop: true,
+    autoplay: {
+      delay: 5000,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next-2",
+      prevEl: ".swiper-button-prev-2",
+    },
+  });

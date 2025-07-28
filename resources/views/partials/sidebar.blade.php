@@ -11,7 +11,7 @@
                 <li class="menu-title" data-key="t-menu">Menu</li>
 
                 <li>
-                    <a href="{{ url('/') }}">
+                    <a href="{{ route('website') }}">
                         <i class="bx bx-home-circle"></i>
                         <span data-key="t-home">Home</span>
                     </a>
@@ -45,12 +45,12 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="{{ route('contacts.index') }}">
-                        <i class="bx bx-phone"></i>
-                        <span data-key="t-kontak">Kontak</span>
-                    </a>
-                </li>
+                 <li>
+    <a href="{{ route('admin.index') }}">
+        <i class="bx bx-file"></i>
+        <span data-key="t-statis">Halaman Statis</span>
+    </a>
+</li>
 
                 <li>
                     <a href="{{ route('downloads.index') }}">
@@ -66,6 +66,12 @@
                     </a>
                 </li>
 
+                 <li>
+                    <a href="{{ route('contacts.index') }}">
+                        <i class="bx bx-phone"></i>
+                        <span data-key="t-kontak">Kontak</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ route('menus.index') }}">
                         <i class="bx bx-food-menu"></i>
@@ -76,13 +82,15 @@
                 <li class="menu-title mt-2" data-key="t-other">Lainnya</li>
 
                 <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-danger w-100 text-start">
-                            <i class="bx bx-power-off me-2"></i> Logout
-                        </button>
-                    </form>
-                </li>
+    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <i class="bx bx-power-off"></i>
+        <span data-key="t-logout">Logout</span>
+    </a>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+</li>
 
             </ul>
         </div>

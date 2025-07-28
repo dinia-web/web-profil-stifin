@@ -15,8 +15,8 @@ protected $fillable = [
 'nama',
 'deskripsi',
 ];
-public function infos()
-{
-return $this->hasMany(Info::class);
-}
+ public function infos()
+    {
+        return $this->hasMany(Info::class);
+    }
 }

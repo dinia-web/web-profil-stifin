@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
-    <link rel="shortcut icon" href="{{ asset('themes/minia/assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('themes/minia/assets/images/logo.png') }}">
 
     <!-- Plugin CSS -->
     <link href="{{ asset('themes/minia/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />
@@ -14,6 +14,8 @@
     <link href="{{ asset('themes/minia/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <link href="{{ asset('themes/minia/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('themes/minia/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('themes/minia/assets/css/custom.css') }}" rel="stylesheet">
+
     @stack('styles')
   </head>
 
@@ -40,7 +42,6 @@
     <script src="{{ asset('themes/minia/assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('themes/minia/assets/libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('themes/minia/assets/libs/feather-icons/feather.min.js') }}"></script>
-    <script src="{{ asset('themes/minia/assets/js/pages/dashboard.init.js') }}"></script>
     <script src="{{ asset('themes/minia/assets/js/app.js') }}"></script>
     @stack('scripts')
   </body>

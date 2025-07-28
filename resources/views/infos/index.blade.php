@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+@section('title', 'Data Info')
 @section('content')
 <div class="container">
 <h3 class="mb-4">Daftar Info</h3>
