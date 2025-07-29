@@ -10,6 +10,6 @@ class DownloadCategory extends Model
 
     public function downloads()
     {
-        return $this->hasMany(Download::class);
+        return $this->hasMany(Download::class, 'category_id');
     }
 }

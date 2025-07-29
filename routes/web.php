@@ -47,3 +47,4 @@ Route::get('/admin/index', [StaticPageController::class, 'index'])->name('admin.
 Route::get('/readmore', function () {
     return view('readmore');
 })->name('readmore');
+Route::get('/galeri', [GalleryController::class, 'publicGallery'])->name('galeri');

@@ -37,10 +37,11 @@
             <textarea name="description" class="form-control" rows="3"></textarea>
         </div>
 
-       <div class="mb-3">
-        <label>Upload Gambar</label>
-        <input type="file" name="image_file" class="form-control" required>
-    </div>
+     <div class="mb-3">
+    <label>Upload Gambar</label>
+    <input type="file" name="image_file" class="form-control" required>
+</div>
+
 
         <div class="mb-3">
             <label>Nama Pengunggah</label>

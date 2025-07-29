@@ -4,16 +4,17 @@
 <div class="container">
     <h3 class="mb-4">Manajemen Galeri</h3>
 
-{{-- Notifikasi sukses --}}
-@if(session('success'))
-<div class="alert alert-success">{{ session('success') }}</div>
-@endif
+    {{-- Notifikasi sukses --}}
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
     <a href="{{ route('galleries.create') }}" class="btn btn-primary mb-3">+ Tambah Galeri</a>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th>Gambar</th>
                 <th>Judul</th>
                 <th>Kategori</th>
                 <th>Album</th>
@@ -25,6 +26,13 @@
         <tbody>
             @foreach($galleries as $g)
                 <tr>
+                    <td>
+                        @if($g->image_path)
+                           <img src="{{ asset('storage/' . $g->image_path) }}" alt="Gambar" style="width: 100px;">
+                        @else
+                            <span class="text-muted">Tidak ada gambar</span>
+                        @endif
+                    </td>
                     <td>{{ $g->title }}</td>
                     <td>{{ $g->category->name ?? '-' }}</td>
                     <td>{{ $g->album->name ?? '-' }}</td>

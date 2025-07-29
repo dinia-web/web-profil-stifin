@@ -4,7 +4,8 @@
 <div class="container">
     <h3>Edit Galeri: {{ $gallery->title }}</h3>
 
-    <form action="{{ route('galleries.update', $gallery->id) }}" method="POST">
+   <form action="{{ route('galleries.update', $gallery->id) }}" method="POST" enctype="multipart/form-data">
+
         @csrf @method('PUT')
 
         <div class="mb-3">
@@ -41,10 +42,21 @@
             <textarea name="description" class="form-control" rows="3">{{ $gallery->description }}</textarea>
         </div>
 
-        <div class="mb-3">
-            <label>Path Gambar / URL</label>
-            <input type="text" name="image_path" class="form-control" value="{{ $gallery->image_path }}" required>
-        </div>
+      <div class="mb-3">
+    <label>Gambar Saat Ini</label><br>
+    @if($gallery->image_path)
+        <img src="{{ asset('storage/' . $gallery->image_path) }}" alt="Preview Gambar" style="max-width: 150px;">
+    @else
+        <p class="text-muted">Belum ada gambar</p>
+    @endif
+</div>
+
+<div class="mb-3">
+    <label>Ganti Gambar</label>
+    <input type="file" name="image_file" class="form-control">
+    <small class="text-muted">Kosongkan jika tidak ingin mengubah gambar</small>
+</div>
+
 
         <div class="mb-3">
             <label>Nama Pengunggah</label>

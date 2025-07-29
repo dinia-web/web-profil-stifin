@@ -34,7 +34,7 @@
             <label>Upload File (kosongkan jika tidak ingin ganti)</label>
             <input type="file" name="file" class="form-control">
             @if($download->file_path)
-                <small>File saat ini: <a href="{{ asset('storage/' . $download->file_path) }}" target="_blank">{{ basename($download->file_path) }}</a></small>
+                <small>File saat ini: <a href="{{ asset ($download->file_path) }}" target="_blank">{{ basename($download->file_path) }}</a></small>
             @endif
         </div>
 
