@@ -8,7 +8,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MenuController;
-use App\Http\Controllers\StaticPageController;
+use App\Http\Controllers\GalleryCategoryController;
+use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\PageController;
 
 Route::get('/home', function () {
     return view('home');
@@ -42,9 +44,19 @@ Route::get('/daftar', function () {
 })->name('daftar');
 Route::get('/kontak', [ContactController::class, 'formKontak'])->name('kontak');
 Route::post('/kontak', [ContactController::class, 'store'])->name('kontak.kirim');
-Route::get('/stifin/halaman/{slug}', [StaticPageController::class, 'show'])->name('static.page');
-Route::get('/admin/index', [StaticPageController::class, 'index'])->name('admin.index');
 Route::get('/readmore', function () {
     return view('readmore');
 })->name('readmore');
 Route::get('/galeri', [GalleryController::class, 'publicGallery'])->name('galeri');
+Route::resource('gallery-categories', GalleryCategoryController::class);
+Route::resource('albums', AlbumController::class);
+Route::get('/halaman/{slug}', [PageController::class, 'show'])->name('pages.show');
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::resource('pages', \App\Http\Controllers\Admin\PageController::class);
+});
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::resource('infos', \App\Http\Controllers\Admin\InfoController::class);
+});
+Route::get('/', [InfoController::class, 'index'])->name('website');
+Route::get('/artikel/{slug}', [InfoController::class, 'show'])->name('public.show');
+Route::get('/artikel', [InfoController::class, 'indexPublic'])->name('artikel');

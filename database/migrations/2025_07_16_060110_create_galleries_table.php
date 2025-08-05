@@ -21,6 +21,9 @@ return new class extends Migration
             $table->date('taken_at')->nullable();
             $table->boolean('is_featured')->default(false);
             $table->timestamps();
+            $table->foreignId('category_id')->constrained('gallery_categories')->onDelete('cascade');
+            $table->foreignId('album_id')->constrained('albums')->onDelete('cascade');
+
         });
     }
 

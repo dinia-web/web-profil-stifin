@@ -20,24 +20,26 @@
           <li><a class="nav-link scrollto {{ request()->routeIs('website') ? 'active' : '' }}" 
          href="{{ route('website') }}">Home</a></li>
          <li class="dropdown">
-            <a class="nav-link scrollto {{ request()->is('stifin/halaman/*') ? 'active' : '' }}"
-                href="{{ route('static.page', ['slug' => 'tentang']) }}">Tentang STIFIn <i class="bi bi-chevron-down"></i></a>
+            <a class="nav-link scrollto {{ request()->is('halaman/*') ? 'active' : '' }}"
+              href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}">Tentang STIFIn
+              <i class="bi bi-chevron-down"></i>
+            </a>
             <ul>
               <li>
-                <a class="nav-link scrollto {{ request()->is('stifin/halaman/sensing') ? 'active' : '' }}" 
-                  href="{{ route('static.page', ['slug' => 'sensing']) }}">Sensing</a>
+                <a class="nav-link scrollto {{ request()->is('halaman/sensing') ? 'active' : '' }}"
+                  href="{{ route('pages.show', ['slug' => 'sensing']) }}">Sensing</a>
               </li>
-              <li> <a class="nav-link scrollto {{ request()->is('stifin/halaman/thinking') ? 'active' : '' }}" 
-                  href="{{ route('static.page', ['slug' => 'thinking']) }}">Thinking</a>
+              <li> <a class="nav-link scrollto {{ request()->is('halaman/thinking') ? 'active' : '' }}" 
+                  href="{{ route('pages.show', ['slug' => 'thinking']) }}">Thinking</a>
               </li>
-               <li> <a class="nav-link scrollto {{ request()->is('stifin/halaman/intuiting') ? 'active' : '' }}" 
-                  href="{{ route('static.page', ['slug' => 'intuiting']) }}">Intuiting</a>
+               <li> <a class="nav-link scrollto {{ request()->is('halaman/intuiting') ? 'active' : '' }}" 
+                  href="{{ route('pages.show', ['slug' => 'intuiting']) }}">Intuiting</a>
               </li>
-              <li> <a class="nav-link scrollto {{ request()->is('stifin/halaman/feeling') ? 'active' : '' }}" 
-                  href="{{ route('static.page', ['slug' => 'feeling']) }}">Feeling</a>
+              <li> <a class="nav-link scrollto {{ request()->is('halaman/feeling') ? 'active' : '' }}" 
+                  href="{{ route('pages.show', ['slug' => 'feeling']) }}">Feeling</a>
               </li>
-              <li> <a class="nav-link scrollto {{ request()->is('stifin/halaman/insting') ? 'active' : '' }}" 
-                  href="{{ route('static.page', ['slug' => 'insting']) }}">Insting</a>
+              <li> <a class="nav-link scrollto {{ request()->is('halaman/insting') ? 'active' : '' }}" 
+                  href="{{ route('pages.show', ['slug' => 'insting']) }}">Insting</a>
               </li>
             </ul>
           </li>

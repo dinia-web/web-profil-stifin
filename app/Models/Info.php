@@ -2,24 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Info extends Model
 {
-use HasFactory;
+    protected $fillable = [
+        'kategori_id', 'judul', 'slug', 'isi', 'gambar',
+        'author', 'is_homepage', 'status', 'published_at'
+    ];
 
-protected $fillable = [
-'kategori_id',
-'judul',
-'slug',
-'isi',
-'gambar',
-];
-
-public function kategori()
+    public function kategori()
     {
-        return $this->belongsTo(Kategori::class);
+        return $this->belongsTo(Kategori::class, 'kategori_id');
     }
 
     public function tags()

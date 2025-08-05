@@ -83,7 +83,7 @@
               <h4 class="title"><a href="">SIMPLE</a></h4>
               <p class="description">Konsep STIFIn dibagi menjadi lima Unit Kecerdasan dan sembilan Personaliti Genetik. 
               FOKUS-SATU-HEBAT.</p>
-              <a href="{{ route('static.page', ['slug' => 'tentang']) }}" class="btn-get-started">Learn More</a>
+              <a href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}" class="btn-get-started">Learn More</a>
             </div>
           </div>
 
@@ -92,7 +92,7 @@
               <h4 class="title"><a href="">AKURAT</a></h4>
               <p class="description">Konsep STIFIn mengenali platform atau perangkat lunak pengendalian  pikiran manusia. 
                 Tingkat keabsahan dan konsistensinya mencapai 95%.  Sekali penggunaan seumur hidup.</p>
-              <a href="{{ route('static.page', ['slug' => 'tentang']) }}" class="btn-get-started">Learn More</a>
+              <a href="{{ route('pages.show', ['slug' => 'tentang']) }}" class="btn-get-started">Learn More</a>
             </div>
           </div>
 
@@ -100,13 +100,27 @@
             <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
               <h4 class="title"><a href="">APLIKATIF</a></h4>
               <p class="description">Bersifat berkolerasi dengan berbagai aspek kehidupan atau MULTI-ANGLE-FIELD.</p>
-              <a href="{{ route('static.page', ['slug' => 'tentang']) }}" class="btn-get-started">Learn More</a>
+              <a href="{{ route('pages.show', ['slug' => 'tentang']) }}" class="btn-get-started">Learn More</a>
             </div>
           </div>
 
-          <div class="col-12 text-center mt-4" data-aos="fade-up" data-aos-delay="500">
-            <img src="/themes/Medicio/assets/img/benner.png" alt="Banner" style="max-width: 800px; width: 100%; border-radius: 10px; margin-top:30px;">
-          </div>
+          @php
+  $banner = \App\Models\Gallery::where('category_id', 2)
+    ->where('status', 'published')
+    ->where('is_featured', true)
+    ->orderBy('created_at', 'desc') // ambil banner terbaru
+    ->first();
+@endphp
+
+@if ($banner)
+  <div class="col-12 text-center mt-4" data-aos="fade-up" data-aos-delay="500">
+    <img src="{{ asset('storage/' . $banner->image_path) }}"
+         alt="Banner"
+         class="img-fluid rounded"
+         style="max-width: 800px; width: 100%; border-radius: 10px; margin-top:30px;">
+  </div>
+@endif
+
 
         </div>
       </div>
@@ -138,15 +152,15 @@
            <div class="btn-group-row">
               <!-- Baris atas: 3 tombol rata kiri -->
               <div class="btn-row">
-                <a href="{{ route('static.page', ['slug' => 'sensing']) }}" class="btn-get-started" style="background-color: #BD1919">Sensing  <i class="fas fa-arrow-right"></i></a>
-                <a href="{{ route('static.page', ['slug' => 'thinking']) }}" class="btn-get-started" style="background-color: #E6892B">Thinking <i class="fas fa-arrow-right"></i></a>
-                <a href="{{ route('static.page', ['slug' => 'intuiting']) }}" class="btn-get-started" style="background-color: #60BD19">Intuiting  <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('pages.show', ['slug' => 'sensing']) }}" class="btn-get-started" style="background-color: #BD1919">Sensing  <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('pages.show', ['slug' => 'thinking']) }}" class="btn-get-started" style="background-color: #E6892B">Thinking <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('pages.show', ['slug' => 'intuiting']) }}" class="btn-get-started" style="background-color: #60BD19">Intuiting  <i class="fas fa-arrow-right"></i></a>
               </div>
 
               <!-- Baris bawah: 2 tombol di tengah -->
               <div class="btn-row">
-                <a href="{{ route('static.page', ['slug' => 'feeling']) }}" class="btn-get-started" style="background-color: #C9CF15">Feeling  <i class="fas fa-arrow-right"></i></a>
-                <a href="{{ route('static.page', ['slug' => 'insting']) }}" class="btn-get-started" style="background-color: #3D5977">Insting  <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('pages.show', ['slug' => 'feeling']) }}" class="btn-get-started" style="background-color: #C9CF15">Feeling  <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('pages.show', ['slug' => 'insting']) }}" class="btn-get-started" style="background-color: #3D5977">Insting  <i class="fas fa-arrow-right"></i></a>
               </div>
             </div>
           </div>
@@ -441,47 +455,45 @@
 
     <div class="artikels-slider swiper" data-aos="fade-up" data-aos-delay="100">
       <div class="swiper-wrapper">
+            @php
+        use App\Models\Info;
 
-        <!-- Slide 1 -->
-        <div class="swiper-slide">
-          <div class="artikel-card card p-3 h-100">
+        $infos = Info::where('kategori_id', 2)
+            ->where('status', 'published')
+            ->latest()
+            ->get();
+        @endphp
+
+
+         @forelse($infos as $info)
+      <div class="swiper-slide">
+        <div class="artikel-card card p-3 h-100">
+          @if($info->gambar)
+            <img src="{{ asset('storage/' . $info->gambar) }}" class="card-img-top" alt="{{ $info->judul }}">
+          @else
             <img src="/themes/Medicio/assets/img/stifin.jpg" class="card-img-top" alt="Artikel STIFIn">
-            <div class="card-body">
-              <h5 class="card-title">Konsep STIFIn</h5>
-              <p class="card-text">Apa itu stifin? Stifin adalah ..... </p>
-              <a href="{{ route('readmore') }}" class="btn btn-primary btn-sm">Read More →</a>
-            </div>
+          @endif
+          <div class="card-body">
+            <h5 class="card-title">{{ $info->judul }}</h5>
+            <p class="card-text">
+              {{ Str::limit(strip_tags($info->isi), 80) }}
+            </p>
+            <a href="{{ route('public.show', $info->slug) }}" class="btn btn-primary btn-sm">Read More →</a>
           </div>
         </div>
-
-        <!-- Duplikat slide -->
-        <div class="swiper-slide">
-          <div class="artikel-card card  p-3 h-100">
-            <img src="/themes/Medicio/assets/img/stifin.jpg" class="card-img-top" alt="Artikel STIFIn">
-            <div class="card-body">
-              <h5 class="card-title">Konsep STIFIn</h5>
-              <p class="card-text">Apa itu stifin? Stifin adalah ..... </p>
-              <a href="{{ route('readmore') }}" class="btn btn-primary btn-sm">Read More →</a>
-            </div>
-          </div>
-        </div>
-
-         <!-- Slide 1 -->
-        <div class="swiper-slide">
-          <div class="artikel-card card  p-3 h-100">
-            <img src="/themes/Medicio/assets/img/stifin.jpg" class="card-img-top" alt="Artikel STIFIn">
-            <div class="card-body">
-              <h5 class="card-title">Konsep STIFIn</h5>
-              <p class="card-text">Apa itu stifin? Stifin adalah ..... </p>
-              <a href="{{ route('readmore') }}" class="btn btn-primary btn-sm">Read More →</a>
-            </div>
-          </div>
-        </div>
-
       </div>
-      <div class="swiper-pagination"></div>
-    </div>
-
+    @empty
+      <div class="swiper-slide">
+        <div class="artikel-card card p-3 h-100 text-center">
+          <div class="card-body">
+            <p class="card-text">Belum ada artikel.</p>
+          </div>
+        </div>
+      </div>
+    @endforelse
+  </div>
+  <div class="swiper-pagination"></div>
+</div>
   </div>
 </section>
   </main><!-- End #main -->

@@ -16,12 +16,16 @@ class GalleryController extends Controller
         $galleries = Gallery::with(['category', 'album'])->latest()->get();
         return view('galleries.index', compact('galleries'));
     }
-    public function publicGallery()
-{
-    $galleries = Gallery::latest()->get();
-    return view('galeri', compact('galleries'));
-}
+   public function publicGallery()
+    {
+        $galleries = Gallery::where('status', 'published')
+            ->where('is_featured', true)
+            ->latest()
+            ->get();
 
+        return view('galeri', compact('galleries'));
+    }
+    
     public function create()
     {
         $categories = GalleryCategory::all();
@@ -52,6 +56,24 @@ class GalleryController extends Controller
         while (Gallery::where('slug', $slug)->exists()) {
             $slug = $originalSlug . '-' . $counter++;
         }
+
+        // Cek dan buat kategori baru jika diisi
+if ($request->filled('new_category')) {
+    $newCategory = GalleryCategory::create([
+        'name' => $request->new_category,
+        'slug' => Str::slug($request->new_category)
+    ]);
+    $request->merge(['category_id' => $newCategory->id]);
+}
+
+// Cek dan buat album baru jika diisi
+if ($request->filled('new_album')) {
+    $newAlbum = Album::create([
+        'name' => $request->new_album,
+        'slug' => Str::slug($request->new_album)
+    ]);
+    $request->merge(['album_id' => $newAlbum->id]);
+}
 
         Gallery::create([
             'title' => $request->title,
@@ -89,6 +111,24 @@ class GalleryController extends Controller
             'status' => 'required|string',
             'taken_at' => 'nullable|date',
         ]);
+
+        // Cek dan buat kategori baru jika diisi
+if ($request->filled('new_category')) {
+    $newCategory = GalleryCategory::create([
+        'name' => $request->new_category,
+        'slug' => Str::slug($request->new_category)
+    ]);
+    $request->merge(['category_id' => $newCategory->id]);
+}
+
+// Cek dan buat album baru jika diisi
+if ($request->filled('new_album')) {
+    $newAlbum = Album::create([
+        'name' => $request->new_album,
+        'slug' => Str::slug($request->new_album)
+    ]);
+    $request->merge(['album_id' => $newAlbum->id]);
+}
 
         $data = $request->only([
             'title', 'category_id', 'album_id', 'description',

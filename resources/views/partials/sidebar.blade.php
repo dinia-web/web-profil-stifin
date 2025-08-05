@@ -39,14 +39,14 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('infos.index') }}">
+                    <a href="{{ route('admin.infos.index') }}">
                         <i class="bx bx-info-circle"></i>
                         <span data-key="t-info">Info</span>
                     </a>
                 </li>
 
                  <li>
-    <a href="{{ route('admin.index') }}">
+    <a href="{{ route('admin.pages.index') }}">
         <i class="bx bx-file"></i>
         <span data-key="t-statis">Halaman Statis</span>
     </a>

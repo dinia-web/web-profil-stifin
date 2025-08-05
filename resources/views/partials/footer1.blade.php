@@ -34,12 +34,12 @@
             <h4>Quick Links</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="{{ route('website') }}">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('static.page', ['slug' => 'tentang']) }}">Tentang STIFIn</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('static.page', ['slug' => 'sensing']) }}">Sensing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('static.page', ['slug' => 'thinking']) }}">Thinking</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('static.page', ['slug' => 'intuiting']) }}">Intuiting</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('static.page', ['slug' => 'feeling']) }}">Feeling</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('static.page', ['slug' => 'insting']) }}">Insting</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}">Tentang STIFIn</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('pages.show', ['slug' => 'sensing']) }}">Sensing</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('pages.show', ['slug' => 'thinking']) }}">Thinking</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('pages.show', ['slug' => 'intuiting']) }}">Intuiting</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('pages.show', ['slug' => 'feeling']) }}">Feeling</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ route('pages.show', ['slug' => 'insting']) }}">Insting</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="{{ route('artikel') }}">Artikel</a></li>
             </ul>
           </div>
