@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Edit Halaman</h2>
-    <form action="{{ route('admin.pages.update', $page->id) }}" method="POST">
+    <form action="{{ route('admin.pages.update', $page->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('admin.pages.partials.form', ['page' => $page])

@@ -3,10 +3,20 @@
 @section('content')
 <div class="container">
     <h2 class="mb-4">Manajemen Kategori Galeri</h2>
-    <div class="d-flex justify-content-between mb-3">
+    <div class="mb-3 d-flex justify-content-between">
+    {{-- Form Pencarian --}}
+    <form method="GET" action="{{ route('gallery-categories.index') }}" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari kategori..." value="{{ request('search') }}">
+        <button type="submit" class="btn btn-outline-primary">Cari</button>
+    </form>
+
+    {{-- Tombol Aksi --}}
+    <div class="d-flex gap-2">
         <a href="{{ route('galleries.index') }}" class="btn btn-secondary">← Kembali ke Galeri</a>
         <a href="{{ route('gallery-categories.create') }}" class="btn btn-primary">+ Tambah Kategori</a>
     </div>
+</div>
+
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -38,5 +48,15 @@
             @endforeach
         </tbody>
     </table>
+     <div class="d-flex justify-content-between mt-3">
+    <div>
+        <p class="mb-4 text-muted">
+            Showing {{ $categories->firstItem() }} to {{ $categories->lastItem() }} of {{ $categories->total() }} results
+        </p>
+    </div>
+    <div>
+        {{ $categories->links('pagination::bootstrap-5') }}
+    </div>
+</div>
 </div>
 @endsection

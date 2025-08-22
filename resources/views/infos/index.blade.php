@@ -9,10 +9,15 @@
 <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
-<a href="{{ route('infos.create') }}" class="btn btn-primary mb-3">+ Tambah
-Info</a>
+<div class="mb-3 d-flex justify-content-between">
+    <form method="GET" action="{{ route('infos.index') }}" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari info..." value="{{ request('search') }}">
+        <button type="submit" class="btn btn-outline-primary">Cari</button>
+    </form>
+    <a href="{{ route('infos.create') }}" class="btn btn-primary">+ Tambah Info</a>
+</div>
 
-<table class="table table-bordered">
+<table id="infoTable" class="table table-bordered">
 <thead>
 <tr>
 <th>Judul</th>
@@ -42,5 +47,28 @@ onsubmit="return confirm('Yakin ingin menghapus?')">
 @endforeach
 </tbody>
 </table>
+    <div class="d-flex justify-content-between align-items-center mt-3">
+    <div>
+        {{ $infos->withQueryString()->links() }}
+    </div>
+</div>
 </div>
 @endsection
+@push('scripts')
+<!-- DataTables CSS & JS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#infoTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": true
+        });
+    });
+</script>
+@endpush

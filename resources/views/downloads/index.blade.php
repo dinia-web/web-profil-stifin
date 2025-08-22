@@ -9,7 +9,13 @@
 <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
-    <a href="{{ route('downloads.create') }}" class="btn btn-primary mb-3">+ Upload File</a>
+ <div class="mb-3 d-flex justify-content-between">
+    <form method="GET" action="{{ route('downloads.index') }}" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari file..." value="{{ request('search') }}">
+        <button type="submit" class="btn btn-outline-primary">Cari</button>
+    </form>
+    <a href="{{ route('downloads.create') }}" class="btn btn-primary">+ Upload File</a>
+</div>
 
     <table class="table table-bordered">
         <thead>
@@ -36,8 +42,16 @@
             @endforeach
         </tbody>
     </table>
+  <div class="d-flex justify-content-between mt-3">
+    <div>
+        <p class="mb-4 text-muted">
+            Showing {{ $downloads->firstItem() }} to {{ $downloads->lastItem() }} of {{ $downloads->total() }} results
+        </p>
+    </div>
+    <div>
+        {{ $downloads->links('pagination::bootstrap-5') }}
+    </div>
+</div>
+
 </div>
 @endsection
-
-
-

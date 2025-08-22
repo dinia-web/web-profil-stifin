@@ -15,9 +15,13 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <div class="mb-3">
-        <a href="{{ route('galleries.create') }}" class="btn btn-primary">+ Tambah Galeri</a>
-    </div>
+    <div class="mb-3 d-flex justify-content-between">
+    <form method="GET" action="{{ route('galleries.index') }}" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari judul galeri..." value="{{ request('search') }}">
+        <button type="submit" class="btn btn-outline-primary">Cari</button>
+    </form>
+    <a href="{{ route('galleries.create') }}" class="btn btn-primary">+ Tambah Galeri</a>
+</div>
 
     <table class="table table-bordered">
         <thead>
@@ -70,5 +74,16 @@
             @endforeach
         </tbody>
     </table>
+   <div class="d-flex justify-content-between mt-3">
+    <div>
+        <p class="mb-2 text-muted">
+            Showing {{ $galleries->firstItem() }} to {{ $galleries->lastItem() }} of {{ $galleries->total() }} results
+        </p>
+    </div>
+    <div>
+        {{ $galleries->links('pagination::bootstrap-5') }}
+    </div>
+</div>
+
 </div>
 @endsection

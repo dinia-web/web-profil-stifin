@@ -12,7 +12,7 @@
         <meta content="Themesbrand" name="author" />
 
     <!-- App favicon -->
-<link rel="shortcut icon" href="{{ asset('themes/minia/assets/images/favicon.ico') }}">
+<link rel="shortcut icon" href="{{ asset('themes/minia/assets/images/logo.png') }}">
 
 <!-- preloader css -->
 <link rel="stylesheet" href="{{ asset('themes/minia/assets/css/preloader.min.css') }}" type="text/css" />

@@ -1,7 +1,5 @@
 @extends('layouts.website')
-
 @section('title', 'Galeri Program')
-
 @section('content')
 <!-- ======= Breadcrumb Section ======= -->
 <section class="breadcrumbs">
@@ -41,8 +39,9 @@
       {{ $albumGalleries->first()->album->name ?? 'Tanpa Nama Album' }}
     </h5>
 
-    <div class="swiper galeriSwiper1" id="lightgallery-{{ $albumId }}">
-      <div class="swiper-wrapper">
+   <div class="swiper" id="galeriSwiper-{{ $albumId }}">
+  <div class="swiper-wrapper" id="lightgallery-{{ $albumId }}">
+
        @foreach ($albumGalleries as $gallery)
   <div class="swiper-slide text-center">
     <a href="{{ asset('storage/' . $gallery->image_path) }}"
@@ -78,7 +77,6 @@
 @endpush
 
 @push('scripts')
-<!-- LightGallery JS -->
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script>
@@ -90,13 +88,16 @@
       loop: true,
       slidesPerView: 1,
       spaceBetween: 20,
+      autoplay: {
+        delay: 3000, // ganti slide setiap 3 detik
+        disableOnInteraction: false
+      },
       navigation: {
         nextEl: ".swiper-button-next-{{ $albumId }}",
         prevEl: ".swiper-button-prev-{{ $albumId }}"
       },
     });
 
-    // Inisialisasi lightGallery juga
     lightGallery(document.getElementById('lightgallery-{{ $albumId }}'), {
       selector: 'a',
       subHtmlSelectorRelative: true,

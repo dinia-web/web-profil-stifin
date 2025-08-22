@@ -1,6 +1,6 @@
 @extends('layouts.website')
 
-@section('title', 'Artikel Terbaru')
+@section('title', 'Artikel')
 
 @section('content')
 <!-- ======= Breadcrumb Section ======= -->

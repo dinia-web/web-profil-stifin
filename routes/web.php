@@ -11,6 +11,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\GalleryCategoryController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PendaftaranController;
 
 Route::get('/home', function () {
     return view('home');
@@ -60,3 +61,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 Route::get('/', [InfoController::class, 'index'])->name('website');
 Route::get('/artikel/{slug}', [InfoController::class, 'show'])->name('public.show');
 Route::get('/artikel', [InfoController::class, 'indexPublic'])->name('artikel');
+Route::post('/daftar', [PendaftaranController::class, 'store'])->name('daftar');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/pendaftaran', [PendaftaranController::class, 'index'])->name('admin.pendaftaran.index');
+    Route::delete('/admin/pendaftaran/{id}', [PendaftaranController::class, 'destroy'])->name('admin.pendaftaran.destroy');
+});
+Route::get('/', [GalleryController::class, 'homepageSlides'])->name('website');

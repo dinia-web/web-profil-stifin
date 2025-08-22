@@ -30,7 +30,7 @@
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
                         <h6 class="fw-bold">Total Pendaftar</h6>
-                        <h4 class="mb-0">{{ $totalPendaftar ?? 280 }}</h4>
+                        <h4 class="mb-0">{{ \App\Models\Pendaftaran::count() }}</h4>
                     </div>
                     <div>
                         <i class="bx bx-news" style="font-size: 2.5rem;"></i>
@@ -54,13 +54,13 @@
             </div>
         </div>
 
-        <!-- Total Tes Online -->
+        <!-- Total Pengguna -->
         <div class="col-md-4 mb-3">
             <div class="card shadow-sm border-0" style="background-color: #28a745; color: white;">
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
-                        <h6 class="fw-bold">Total Tes Online</h6>
-                        <h4 class="mb-0">{{ $totalTesOnline ?? 100 }}</h4>
+                        <h6 class="fw-bold">Total Pengguna</h6>
+                        <h4 class="mb-0">{{ \App\Models\User::count() }}</h4>
                     </div>
                     <div>
                         <i class="bx bx-user" style="font-size: 2.5rem;"></i>

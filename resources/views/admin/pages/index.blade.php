@@ -3,7 +3,14 @@
 @section('content')
 <div class="container">
     <h4 class="mb-4">Manajemen Halaman Statis</h4>
-    <a href="{{ route('admin.pages.create') }}" class="btn btn-primary mb-3">+ Tambah Halaman</a>
+
+      <div class="mb-3 d-flex justify-content-between">
+    <form method="GET" action="{{ route('admin.pages.index') }}" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari halaman..." value="{{ request('search') }}">
+        <button type="submit" class="btn btn-outline-primary">Cari</button>
+    </form>
+    <a href="{{ route('admin.pages.create') }}" class="btn btn-primary">+ Tambah Halaman</a>
+</div>
 
     <table class="table table-bordered">
         <thead>
@@ -45,6 +52,16 @@
             @endforeach
         </tbody>
     </table>
-    {{ $pages->links() }}
+   <div class="d-flex justify-content-between mt-3">
+    <div>
+        <p class="mb-4 text-muted">
+            Showing {{ $pages->firstItem() }} to {{ $pages->lastItem() }} of {{ $pages->total() }} results
+        </p>
+    </div>
+    <div>
+        {{ $pages->links('pagination::bootstrap-5') }}
+    </div>
+</div>
+
 </div>
 @endsection

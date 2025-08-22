@@ -6,11 +6,19 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function index()
-    {
-        $contacts = Contact::latest()->get();
-        return view('contacts.index', compact('contacts'));
+   public function index(Request $request)
+{
+    $query = Contact::query();
+
+    if ($request->has('search') && $request->search != '') {
+        $query->where('name', 'like', '%' . $request->search . '%');
     }
+
+    $contacts = $query->latest()->paginate(5);
+
+    return view('contacts.index', compact('contacts'));
+}
+
 
     public function show(Contact $contact)
     {

@@ -9,11 +9,19 @@ use Illuminate\Support\Facades\Storage;
 
 class DownloadController extends Controller
 {
-   public function index()
+  public function index(Request $request)
 {
-    $downloads = Download::with('category')->latest()->get();
+    $query = Download::with('category')->latest();
+
+    if ($request->has('search') && $request->search != '') {
+        $query->where('title', 'like', '%' . $request->search . '%');
+    }
+
+    $downloads = $query->paginate(5)->withQueryString();
+
     return view('downloads.index', compact('downloads'));
 }
+
 
 public function create()
 {

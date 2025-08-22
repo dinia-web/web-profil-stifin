@@ -9,11 +9,19 @@ class KategoriController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-       $kategoris = Kategori::orderBy('created_at', 'desc')->get();
-return view('kategoris.index', compact('kategoris'));
+    
+    public function index(Request $request)
+{
+    $query = Kategori::query();
+
+    if ($request->has('search') && $request->search != '') {
+        $query->where('nama', 'like', '%' . $request->search . '%');
     }
+
+    $kategoris = $query->orderBy('created_at', 'desc')->paginate(5); // tampilkan 10 per halaman
+
+    return view('kategoris.index', compact('kategoris'));
+}
 
     /**
      * Show the form for creating a new resource.

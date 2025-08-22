@@ -9,7 +9,13 @@
 <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
-    <a href="{{ route('menus.create') }}" class="btn btn-primary mb-3">+ Tambah Menu</a>
+ <div class="mb-3 d-flex justify-content-between">
+    <form method="GET" action="{{ route('menus.index') }}" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari menu..." value="{{ request('search') }}">
+        <button type="submit" class="btn btn-outline-primary">Cari</button>
+    </form>
+    <a href="{{ route('menus.create') }}" class="btn btn-primary">+ Tambah Menu</a>
+</div>
 
     <table class="table table-bordered">
         <thead>
@@ -43,5 +49,16 @@
             @endforeach
         </tbody>
     </table>
+   <div class="d-flex justify-content-between mt-3">
+    <div>
+        <p class="mb-4 text-muted">
+            Showing {{ $menus->firstItem() }} to {{ $menus->lastItem() }} of {{ $menus->total() }} results
+        </p>
+    </div>
+    <div>
+        {{ $menus->links('pagination::bootstrap-5') }}
+    </div>
+</div>
+
 </div>
 @endsection

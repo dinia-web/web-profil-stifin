@@ -32,19 +32,20 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('kategoris.index') }}">
-                        <i class="bx bx-category"></i>
-                        <span data-key="t-kategori">Kategori</span>
-                    </a>
-                </li>
-
-                <li>
                     <a href="{{ route('admin.infos.index') }}">
                         <i class="bx bx-info-circle"></i>
                         <span data-key="t-info">Info</span>
                     </a>
                 </li>
-
+                  <li>
+                    <a href="{{ route('admin.pendaftaran.index') }}">
+                        <i class="bx bx-id-card"></i>
+                        <span data-key="t-pendaftar">Pendaftar Tes STIFIn</span>
+                        <span class="badge bg-danger rounded-pill ms-2">
+                            {{ \App\Models\Pendaftaran::count() }}
+                        </span>
+                    </a>
+                </li>
                  <li>
     <a href="{{ route('admin.pages.index') }}">
         <i class="bx bx-file"></i>

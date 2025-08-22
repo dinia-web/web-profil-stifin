@@ -4,8 +4,20 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">Daftar Info</h1>
-    <a href="{{ route('admin.infos.create') }}" class="btn btn-primary mb-3">+ Tambah Info</a>
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="mb-0">Daftar Info</h3>
+        <div>
+            <a href="{{ route('kategoris.index') }}" class="btn btn-sm btn-outline-secondary me-2">Kelola Kategori</a>
+        </div>
+    </div>
+
+    <div class="mb-3 d-flex justify-content-between">
+    <form method="GET" action="{{ route('admin.infos.index') }}" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari info..." value="{{ request('search') }}">
+        <button type="submit" class="btn btn-outline-primary">Cari</button>
+    </form>
+    <a href="{{ route('admin.infos.create') }}" class="btn btn-primary">+ Tambah Info</a>
+</div>
 
     <table class="table table-bordered">
         <thead>
@@ -60,5 +72,15 @@
             @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-between mt-3">
+    <div>
+        <p class="mb-4 text-muted">
+            Showing {{ $infos->firstItem() }} to {{ $infos->lastItem() }} of {{ $infos->total() }} results
+        </p>
+    </div>
+    <div>
+        {{ $infos->links('pagination::bootstrap-5') }}
+    </div>
+</div>
 </div>
 @endsection

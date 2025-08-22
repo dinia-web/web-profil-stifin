@@ -11,11 +11,28 @@ use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
-    public function index()
-    {
-        $galleries = Gallery::with(['category', 'album'])->latest()->get();
-        return view('galleries.index', compact('galleries'));
+   public function index(Request $request)
+{
+    $query = Gallery::with(['category', 'album']);
+
+    if ($request->has('search') && $request->search != '') {
+        $query->where('title', 'like', '%' . $request->search . '%');
     }
+
+    $galleries = $query->latest()->paginate(5); // 10 item per halaman
+
+    return view('galleries.index', compact('galleries'));
+}
+public function homepageSlides()
+{
+    $galleries = Gallery::where('status', 'published')
+        ->where('is_featured', true)
+        ->latest()
+        ->get();
+
+    return view('homepage', compact('galleries'));
+}
+
    public function publicGallery()
     {
         $galleries = Gallery::where('status', 'published')
@@ -37,7 +54,7 @@ class GalleryController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'image_file' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'image_file' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'category_id' => 'nullable|exists:gallery_categories,id',
             'album_id' => 'nullable|exists:albums,id',
             'description' => 'nullable|string',
@@ -103,7 +120,7 @@ if ($request->filled('new_album')) {
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'image_file' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'image_file' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'category_id' => 'nullable|exists:gallery_categories,id',
             'album_id' => 'nullable|exists:albums,id',
             'description' => 'nullable|string',

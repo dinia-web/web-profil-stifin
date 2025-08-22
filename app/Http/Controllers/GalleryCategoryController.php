@@ -8,11 +8,21 @@ use Illuminate\Support\Str;
 
 class GalleryCategoryController extends Controller
 {
-    public function index()
-    {
-        $categories = GalleryCategory::all();
-        return view('gallery_categories.index', compact('categories'));
+   public function index(Request $request)
+{
+    $query = GalleryCategory::query();
+
+    // Jika ada pencarian berdasarkan nama kategori
+    if ($request->has('search') && $request->search != '') {
+        $query->where('name', 'like', '%' . $request->search . '%');
     }
+
+    // Urutkan terbaru dan paginasi
+    $categories = $query->orderByDesc('created_at')->paginate(5)->withQueryString();
+
+    return view('gallery_categories.index', compact('categories'));
+}
+
 
     public function create()
     {

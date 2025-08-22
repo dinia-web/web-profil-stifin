@@ -3,50 +3,69 @@
 @section('title', 'Data Kategori')
 
 @section('content')
-<div class="container mt-4">
-<h3 class="mb-4">Daftar Kategori</h3>
+<div class="container">
+    <h2 class="mb-4">Daftar Kategori</h2>
+    <div class="mb-3 d-flex justify-content-between">
+    {{-- Form Pencarian --}}
+    <form method="GET" action="{{ route('kategoris.index') }}" class="d-flex">
+        <input type="text" name="search" class="form-control me-2" placeholder="Cari kategori..." value="{{ request('search') }}">
+        <button type="submit" class="btn btn-outline-primary">Cari</button>
+    </form>
+
+    {{-- Tombol Aksi --}}
+    <div class="d-flex gap-2">
+        <a href="{{ route('admin.infos.index') }}" class="btn btn-secondary">← Kembali ke Info</a>
+        <a href="{{ route('kategoris.create') }}" class="btn btn-primary">+ Tambah Kategori</a>
+    </div>
+</div>
 
 {{-- Notifikasi sukses --}}
 @if(session('success'))
 <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
-<a href="{{ route('kategoris.create') }}" class="btn btn-primary mb-3">+ Tambah
-Kategori</a>
 
 <table class="table table-bordered">
-<tr>
-<th style="width: 50px;">No</th>
-<th>Nama Kategori</th>
-<th>Deskripsi</th>
-<th style="width: 150px;">Aksi</th>
-</tr>
-</thead>
-<tbody>
-@forelse ($kategoris as $index => $kategori)
-<tr>
-<td>{{ $index + 1 }}</td>
-<td>{{ $kategori->nama }}</td>
-<td>{{ $kategori->deskripsi }}</td>
-<td>
-<a href="{{ route('kategoris.edit', $kategori->id) }}"
-class="btn btn-sm btn-warning">Edit</a>
-<form action="{{ route('kategoris.destroy', $kategori->id)
-}}" method="POST" class="d-inline"
-onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
-@csrf
-@method('DELETE')
-<button class="btn btn-sm btn-danger">Hapus</button>
-</form>
-</td>
-</tr>
-@empty
-
-<tr>
-<td colspan="4" class="text-center">Belum ada data kategori.</td>
-</tr>
-@endforelse
-</tbody>
+    <thead>
+        <tr>
+            <th style="width: 50px;">No</th>
+            <th>Nama Kategori</th>
+            <th>Deskripsi</th>
+            <th style="width: 150px;">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse ($kategoris as $index => $kategori)
+        <tr>
+            <td>{{ $kategoris->firstItem() + $index }}</td>
+            <td>{{ $kategori->nama }}</td>
+            <td>{{ $kategori->deskripsi }}</td>
+            <td>
+                <a href="{{ route('kategoris.edit', $kategori->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <form action="{{ route('kategoris.destroy', $kategori->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-sm btn-danger">Hapus</button>
+                </form>
+            </td>
+        </tr>
+        @empty
+        <tr>
+            <td colspan="4" class="text-center">Belum ada data kategori.</td>
+        </tr>
+        @endforelse
+    </tbody>
 </table>
+
+ <div class="d-flex justify-content-between mt-3">
+    <div>
+        <p class="mb-4 text-muted">
+            Showing {{ $kategoris->firstItem() }} to {{ $kategoris->lastItem() }} of {{ $kategoris->total() }} results
+        </p>
+    </div>
+    <div>
+        {{ $kategoris->links('pagination::bootstrap-5') }}
+    </div>
+</div>
 </div>
 @endsection

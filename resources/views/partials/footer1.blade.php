@@ -6,7 +6,7 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="footer-info">
-             <a href="index.html" class="logo me-auto"><img src="/themes/Medicio/assets/img/logo.png" alt=""></a>
+             <a href="index.html" class="logo me-auto"><img src="/themes/Medicio/assets/img/logo1.png" alt=""></a>
               <p>
                 <br>
                 Gedung Souvereign Plaza <br>

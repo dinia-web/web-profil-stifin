@@ -11,11 +11,19 @@ use Illuminate\Support\Str;
 
 class InfoController extends Controller
 {
-    public function index()
-    {
-        $infos = Info::with('kategori', 'tags')->latest()->get();
-        return view('admin.infos.index', compact('infos'));
+    public function index(Request $request)
+{
+    $query = Info::with('kategori', 'tags');
+
+    if ($request->has('search') && $request->search != '') {
+        $query->where('title', 'like', '%' . $request->search . '%');
     }
+
+    $infos = $query->latest()->paginate(5)->withQueryString();
+
+    return view('admin.infos.index', compact('infos'));
+}
+
 
     public function create()
     {

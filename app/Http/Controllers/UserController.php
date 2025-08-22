@@ -3,18 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
 // Tampilkan semua user
-public function index()
+public function index(Request $request)
 {
-$users = User::orderBy('id', 'DESC')->get();
-return view('users.index', compact('users'));
+    $query = User::query();
+
+    if ($request->has('search') && $request->search != '') {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
+
+    $users = $query->orderBy('id', 'DESC')->paginate(5)->withQueryString();
+
+    return view('users.index', compact('users'));
 }
+
 
 // Tampilkan form tambah user
 public function create()

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Buat Halaman Baru</h2>
-    <form action="{{ route('admin.pages.store') }}" method="POST">
+    <form action="{{ route('admin.pages.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @include('admin.pages.partials.form', ['page' => new \App\Models\Page])
         <button class="btn btn-primary">Simpan</button>

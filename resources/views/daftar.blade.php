@@ -17,33 +17,39 @@
 </section>
 <!-- End Breadcrumb Section -->
 
-<!-- ======= About Us Section ======= -->
 <section id="tentang-tes" class="about">
   <div class="container" data-aos="fade-up">
+    @php
+      use App\Models\Info;
 
-    <div class="row">
-      <div class="col-lg-6" data-aos="fade-right">
-        <img src="/themes/Medicio/assets/img/slide/slide-3.jpg" class="img-fluid" alt="Tes STIFIn">
-      </div>
-      <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
-        <h3>Kenapa Tes STIFIn Penting?</h3>
-        <p class="fst-italic">
-          Tes STIFIn bukan hanya soal mengetahui tipe kepribadian. Tapi juga untuk membantu Anda hidup lebih efektif sesuai mesin kecerdasan alami.
-        </p>
-        <ul>
-          <li><i class="bi bi-check-circle"></i> Hasil tes akurat karena berbasis biometrik (sidik jari).</li>
-          <li><i class="bi bi-check-circle"></i> Membantu memilih jurusan, karier, dan gaya belajar yang cocok.</li>
-          <li><i class="bi bi-check-circle"></i> Cukup dilakukan sekali seumur hidup, berlaku selamanya.</li>
-        </ul>
-        <p>
-          Dengan memahami Mesin Kecerdasan, Anda dapat mengarahkan potensi secara tepat. Tidak lagi bingung menentukan arah hidup karena semuanya dimulai dari mengenal diri sendiri secara utuh.
-        </p>
-      </div>
-    </div>
+      $infos = Info::where('kategori_id', 1)
+          ->where('status', 'published')
+          ->latest()
+          ->get();
+    @endphp
 
+    @forelse($infos as $info)
+      <div class="row" data-aos="fade-right">
+         <div class="col-lg-6 order-lg-1 order-2">
+          @if($info->gambar)
+            <img src="{{ asset('storage/' . $info->gambar) }}" 
+                 class="img-fluid rounded" 
+                 alt="{{ $info->judul }}">
+          @endif
+        </div>
+        {{-- Konten di kiri --}}
+        <div class="col-lg-6 order-lg-2 order-1" data-aos="fade-left">
+          <h3>{{ $info->judul }}</h3>
+          {!! $info->isi !!}
+        </div>
+      </div>
+    @empty
+      <div class="col-12">
+        <p class="text-center">Belum ada info</p>
+      </div>
+    @endforelse
   </div>
 </section>
-<!-- End About Us Section -->
 
 <!-- ======= Doctors Section ======= -->
     <section id="doctors" class="doctors section-bg">
@@ -132,48 +138,48 @@
       </div>
     </section><!-- End Doctors Section -->
 
-<!-- ======= Services Section ======= -->
 <section id="services" class="services services">
   <div class="container" data-aos="fade-up">
+
+    @php
+        $infos = \App\Models\Info::where('kategori_id', 3)
+            ->where('status', 'published')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $icons = [
+            'bi bi-fingerprint',
+            'bi bi-gift',
+            'bi bi-file-earmark-text',
+            'bi bi-mortarboard',
+            'bi bi-chevron-down icon-show',
+        ];
+    @endphp
 
     <div class="section-title">
       <h4>Fasilitas Tes yang Akan Didapat</h4>
     </div>
-
+    
     <div class="row justify-content-center">
-      <!-- Fasilitas 1 -->
-      <div class="col-lg-6 col-xl-3 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="100">
-        <div class="icon"><i class="bi bi-fingerprint"></i></div>
-        <h4 class="title">
-          <a>Tes sidik jari berbasis genetik<br><small>(1x seumur hidup)</small></a>
-        </h4>
-        <p class="description">Tes ilmiah yang hanya perlu dilakukan sekali seumur hidup untuk mengetahui Mesin Kecerdasan Anda.</p>
-      </div>
+        @forelse ($infos as $key => $info)
+            <div class="col-lg-6 col-xl-3 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="100">
+                
+                <div class="icon">
+                    <i class="{{ $icons[$key % count($icons)] }}"></i>
+                </div>
 
-      <!-- Fasilitas 2 -->
-      <div class="col-lg-6 col-xl-3 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="200">
-        <div class="icon"><i class="bi bi-gift"></i></div>
-        <h4 class="title"><a>Merchandise</a></h4>
-        <p class="description">Dapatkan merchandise eksklusif sebagai kenang-kenangan dari pengalaman tes Anda.</p>
-      </div>
-
-      <!-- Fasilitas 3 -->
-      <div class="col-lg-6 col-xl-3 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="300">
-        <div class="icon"><i class="bi bi-file-earmark-text"></i></div>
-        <h4 class="title"><a>E-Certificate dan eBook<br>hasil tes</a></h4>
-        <p class="description">Hasil tes lengkap dalam bentuk digital, termasuk sertifikat dan eBook penjelasan tipe Anda.</p>
-      </div>
-
-      <!-- Fasilitas 4 -->
-      <div class="col-lg-6 col-xl-3 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="400">
-        <div class="icon"><i class="bi bi-mortarboard"></i></div>
-        <h4 class="title"><a>Akses ke Akademi<br>Entrepreneur <small>(opsional)</small></a></h4>
-        <p class="description">Kesempatan bergabung di komunitas belajar wirausaha untuk mengembangkan potensi diri Anda.</p>
-      </div>
+                <h4 class="title">
+                    <a>{{ $info->judul }}</a>
+                </h4>
+                <p class="description">{!! $info->isi !!}</p>
+            </div>
+        @empty
+            <p class="text-center">Belum ada fasilitas tes yang dipublikasikan.</p>
+        @endforelse
     </div>
-      
+
   </div>
-</section><!-- End Services Section -->
+</section>
 
  <!-- ======= Bonus Tambahan Section ======= -->
 <section id="bonus" class="faq section-bg">
@@ -258,7 +264,7 @@
       <h5 class="fw-bold text-center mb-3">Formulir Pendaftaran Tes STIFIn</h5>
 
       <div class="alert alert-info small">
-        📌 <strong>Catatan:</strong> Jika Anda mengikuti tes STIFIn secara online, mohon unggah foto sidik jari Anda. Format file harus jelas, tajam, dan difoto dari atas kertas formulir tes yang dikirim (JPG/PNG).
+        📌 <strong>Catatan:</strong> Jika Anda mengikuti tes STIFIn secara online, mohon unggah foto sidik jari Anda. Format file harus jelas, tajam, dan difoto dari atas kertas, formulir tes yang dikirim (JPG/PNG).
       </div>
 
       <form action="{{ route('daftar') }}" method="POST" enctype="multipart/form-data">
@@ -282,21 +288,24 @@
           <label class="form-label">Pilih Paket Tes *</label>
           <select name="paket" class="form-select" required>
             <option selected disabled>-- Pilih Paket --</option>
-            <option value="personal">Personal / Couple -- Rp894.000</option>
+            <option value="personal">Personal / Couple -- Rp649.000</option>
+            <option value="family">Family / Group -- Rp599.000</option>
+            <option value="instansi">Instansi -- Rp549.000</option>
           </select>
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Lokasi Tes</label>
-          <select name="lokasi" class="form-select">
+          <label class="form-label">Lokasi Tes *</label>
+          <select name="lokasi" class="form-select" id="lokasi" required>
+            <option selected disabled>-- Pilih Lokasi --</option>
             <option value="Online">Online</option>
             <option value="Offline">Offline</option>
           </select>
         </div>
 
-        <div class="mb-3">
-          <label class="form-label">Upload Foto Sidik Jari</label>
-          <input type="file" name="sidik_jari" class="form-control">
+        <div class="mb-3" id="sidikJariField" style="display: none;">
+          <label class="form-label">Upload Foto Sidik Jari *</label>
+          <input type="file" name="sidik_jari" id="sidik_jari" class="form-control">
           <small class="text-muted">Hanya diisi jika memilih lokasi ‘Online’.</small>
         </div>
 
@@ -330,7 +339,7 @@
       <i class="bi bi-envelope me-1"></i> Email: info@stifingenetic.com
     </p>
 
-    <a href="https://wa.me/6285772175078" target="_blank"
+    <a href="https://wa.me/6287848631234" target="_blank"
        class="btn btn-whatsapp px-4 py-2 mb-4 d-inline-flex align-items-center justify-content-center">
       <i class="bi bi-whatsapp me-2"></i> Hubungi Via WhatsApp
     </a>
@@ -348,3 +357,23 @@
      <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   @endsection
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const lokasi = document.getElementById('lokasi');
+    if (!lokasi) return; // stop kalau elemen nggak ketemu
+
+    lokasi.addEventListener('change', () => {
+        const sidikField = document.getElementById('sidikJariField');
+        const sidikInput = document.getElementById('sidik_jari');
+
+        if (lokasi.value === 'Online') {
+            sidikField.style.display = 'block';
+            sidikInput.required = true;
+        } else {
+            sidikField.style.display = 'none';
+            sidikInput.required = false;
+            sidikInput.value = '';
+        }
+    });
+});
+</script>

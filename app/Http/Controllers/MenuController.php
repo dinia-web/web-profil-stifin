@@ -8,11 +8,19 @@ use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
-    public function index()
-    {
-        $menus = Menu::orderBy('order')->get();
-        return view('menus.index', compact('menus'));
+    public function index(Request $request)
+{
+    $query = Menu::query();
+
+    if ($request->has('search') && $request->search != '') {
+        $query->where('name', 'like', '%' . $request->search . '%');
     }
+
+    $menus = $query->orderBy('order')->paginate(5)->withQueryString(); // pagination ditambahkan
+
+    return view('menus.index', compact('menus'));
+}
+
 
     public function create()
     {

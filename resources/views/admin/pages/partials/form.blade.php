@@ -20,7 +20,10 @@
 </div>
 <div class="mb-3">
     <label>Featured Image</label>
-    <input type="text" name="featured_image" class="form-control" value="{{ old('featured_image', $page->featured_image) }}">
+    <input type="file" name="featured_image" class="form-control">
+    @if ($page->featured_image)
+      <img src="{{ asset('storage/' . $page->featured_image) }}" alt="Featured Image" style="max-width: 200px; margin-top:10px;">
+    @endif
 </div>
 <div class="mb-3">
     <label>Meta Description</label>

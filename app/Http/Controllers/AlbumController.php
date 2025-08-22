@@ -8,11 +8,21 @@ use Illuminate\Support\Str;
 
 class AlbumController extends Controller
 {
-    public function index()
-    {
-        $albums = Album::all();
-        return view('albums.index', compact('albums'));
+   public function index(Request $request)
+{
+    $query = Album::query();
+
+    // Filter pencarian berdasarkan nama album
+    if ($request->has('search') && $request->search != '') {
+        $query->where('name', 'like', '%' . $request->search . '%');
     }
+
+    // Urutkan dari terbaru dan pakai pagination
+    $albums = $query->orderByDesc('created_at')->paginate(5)->withQueryString();
+
+    return view('albums.index', compact('albums'));
+}
+
 
     public function create()
     {

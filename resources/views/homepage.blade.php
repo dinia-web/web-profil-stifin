@@ -4,70 +4,85 @@
 
 @section('content')
   <!-- ======= Hero Section ======= -->
-  <section id="hero">
+<section id="hero">
     <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
 
       <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
 
       <div class="carousel-inner" role="listbox">
 
-        <!-- Slide 1 -->
-        <div class="carousel-item active" style="background-image: url(/themes/medicio/assets/img/slide/slide-1.jpg)">
-          <div class="container">
-            <h2>Temukan Karpet Merah Kehidupan Terbaikmu dengan STIFIn</h2>
-            <p> STIFIn merupakan konsep tentang fungsi otak dominan yang menjadi sistem operasi pada otak manusia 
-                (Sensing, Thinking, Intuiting, Feeling dan Insting) untuk mengetahui jenis kecerdasan dan personaliti seseorang.</p>
-          </div>
-        </div>
+  @php
+use App\Models\Gallery;
 
-        <!-- Slide 2 -->
-        <div class="carousel-item" style="background-image: url(/themes/medicio/assets/img/slide/slide-2.jpg)">
-          <div class="container">
-            <h2>Akademi Entrepreneur oleh STIFIn</h2>
-            <p>Akademi Entrepreneur adalah program penggemblengan intensif dari Jamil Azzaini dan Tim untuk memiliki skill Entrepreneur, Leader, dan Manager  dengan menjadi Branch Manager STIFIn.</p>
-          </div>
-        </div>
+$galleries = Gallery::with('album')
+    ->where('category_id', 3)
+    ->where('status', 'published')
+    ->where('is_featured', true)
+    ->orderBy('album_id', 'asc')
+    ->get();
+@endphp
 
-        <!-- Slide 3 -->
-        <div class="carousel-item" style="background-image: url(/themes/medicio/assets/img/slide/slide-3.jpg)">
-          <div class="container">
-            <h2>Workshop STIFIn Parenting</h2>
-            <p>Temukan kekuatan anda, temukan kelebihan anda... Temukan potensi terbaik anda melalui Konsep STIFIn. Sebuah konsep untuk bisa sukses dalam banyak bidang.</p>
-          </div>
-        </div>
+<ol>
+  @foreach ($galleries as $key => $gallery)
+    <li data-bs-target="#heroCarousel" data-bs-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}"></li>
+  @endforeach
+</ol>
 
+<div class="carousel-inner">
+  @foreach ($galleries as $key => $gallery)
+    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}" style="background-image: url('{{ asset('storage/' . $gallery->image_path) }}')">
+      <div class="container">
+        <h2>{{ $gallery->title }}</h2>
+        <p>{{ $gallery->description }}</p>
       </div>
-
-      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-      </a>
-
-      <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
-        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-      </a>
-
     </div>
-  </section><!-- End Hero -->
+  @endforeach
+</div>
+
+
+    <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+    </a>
+
+    <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+    </a>
+
+  </div>
+</section><!-- End Hero -->
 
      <!-- ======= whych choose stifin ======= -->
-   <section id="whych" class="whych">
-  <div class="container" data-aos="fade-up">
-    <div class="row align-items-center">
-      <div class="col-lg-6" data-aos="fade-right">
-        <img src="/themes/Medicio/assets/img/whych.png" class="img-fluid" alt="Kenapa Memilih STIFIn?">
-      </div>
-      <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
-        <h3>Kenapa Memilih STIFIn?</h3>
-        <p class="fst-italic">
-          Revolusi hidup terbaik bukan dengan mengubah cara hidup, tetapi dengan menghargai potensi diri yang diberikan Allah.
-          Setelah tes STIFIn, Anda akan belajar berilmu, bersyukur, dan bersabar melalui potensi tersebut.
-          Ubah nasib melalui jalan yang Tuhan berikan, yaitu ‘karpet merah’ kehidupan sesungguhnya.
-        </p>
-        <a class="btn-get-started" href="{{ route('kontak') }}">Contact Us</a>
-      </div>
-    </div>
-  </div>
-</section>
+        @php
+      use App\Models\Page;
+
+      $whychPage = Page::where('slug', 'kenapa-memilih-stifin')
+                      ->where('status', 'published')
+                      ->first();
+      @endphp
+
+      @if ($whychPage)
+      <section id="whych" class="whych">
+        <div class="container" data-aos="fade-up">
+          <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+              @if($whychPage->featured_image)
+                <img src="{{ asset('storage/' . $whychPage->featured_image) }}" class="img-fluid" alt="{{ $whychPage->title }}">
+              @else
+                <img src="/themes/Medicio/assets/img/whych.png" class="img-fluid" alt="{{ $whychPage->title }}">
+              @endif
+            </div>
+            <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
+              <h3>{{ $whychPage->title }}</h3>
+              <p class="fst-italic">
+                {!! $whychPage->content !!}
+              </p>
+              <a class="btn-get-started" href="{{ route('kontak') }}">Contact Us</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      @endif
+
 <!--  whych choose stifin -->
 
     <!-- ======= Featured Services Section ======= -->
@@ -92,7 +107,7 @@
               <h4 class="title"><a href="">AKURAT</a></h4>
               <p class="description">Konsep STIFIn mengenali platform atau perangkat lunak pengendalian  pikiran manusia. 
                 Tingkat keabsahan dan konsistensinya mencapai 95%.  Sekali penggunaan seumur hidup.</p>
-              <a href="{{ route('pages.show', ['slug' => 'tentang']) }}" class="btn-get-started">Learn More</a>
+              <a href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}" class="btn-get-started">Learn More</a>
             </div>
           </div>
 
@@ -100,27 +115,26 @@
             <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
               <h4 class="title"><a href="">APLIKATIF</a></h4>
               <p class="description">Bersifat berkolerasi dengan berbagai aspek kehidupan atau MULTI-ANGLE-FIELD.</p>
-              <a href="{{ route('pages.show', ['slug' => 'tentang']) }}" class="btn-get-started">Learn More</a>
+              <a href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}" class="btn-get-started">Learn More</a>
             </div>
           </div>
 
-          @php
-  $banner = \App\Models\Gallery::where('category_id', 2)
-    ->where('status', 'published')
-    ->where('is_featured', true)
-    ->orderBy('created_at', 'desc') // ambil banner terbaru
-    ->first();
-@endphp
+         @php
+            $banner = \App\Models\Gallery::where('category_id', 2)
+                ->where('status', 'published')
+                ->where('is_featured', true)
+                ->orderBy('created_at', 'desc')
+                ->first();
+        @endphp
 
-@if ($banner)
-  <div class="col-12 text-center mt-4" data-aos="fade-up" data-aos-delay="500">
-    <img src="{{ asset('storage/' . $banner->image_path) }}"
-         alt="Banner"
-         class="img-fluid rounded"
-         style="max-width: 800px; width: 100%; border-radius: 10px; margin-top:30px;">
-  </div>
-@endif
-
+        @if ($banner)
+            <div class="col-12 text-center mt-4" data-aos="fade-up" data-aos-delay="500">
+                <img src="{{ asset('storage/' . $banner->image_path) }}"
+                    alt="Banner"
+                    class="img-fluid rounded banner-zoom">
+  
+            </div>
+        @endif
 
         </div>
       </div>
@@ -397,7 +411,7 @@
                 <li class="na">Massa ultricies mi</li>
               </ul>
               <div class="btn-wrap">
-                <a href="#" class="btn-buy">Click Here</a>
+                <a href="https://wa.me/6287848631234" target="_blank" class="btn-buy">Click Here</a>
               </div>
             </div>
           </div>
@@ -415,7 +429,7 @@
                 <li>Massa ultricies mi</li>
               </ul>
               <div class="btn-wrap">
-                <a href="#" class="btn-buy">Click Here</a>
+                <a href="https://wa.me/6287848631234" target="_blank" class="btn-buy">Click Here</a>
               </div>
             </div>
           </div>
@@ -434,7 +448,7 @@
                 <li>Massa ultricies mi</li>
               </ul>
               <div class="btn-wrap">
-                <a href="#" class="btn-buy">Click Here</a>
+                <a href="https://wa.me/6287848631234" class="btn-buy">Click Here</a>
               </div>
             </div>
           </div>
