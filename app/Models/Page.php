@@ -17,5 +17,10 @@ class Page extends Model
         'meta_description',
         'meta_keywords',
         'is_homepage',
+         'show_as_button',
     ];
+    protected $casts = [
+    'published_at' => 'datetime',
+];
+
 }

@@ -3,9 +3,12 @@
     <input type="text" name="title" class="form-control" value="{{ old('title', $page->title) }}" required>
 </div>
 <div class="mb-3">
-    <label>Konten</label>
-    <textarea name="content" class="form-control" rows="8" required>{{ old('content', $page->content) }}</textarea>
+    <label for="content">Konten</label>
+    <textarea id="editor" name="content" class="form-control" rows="8" required>
+        {{ old('content', $page->content ?? '') }}
+    </textarea>
 </div>
+
 <div class="mb-3">
     <label>Status</label>
     <select name="status" class="form-control">
@@ -34,6 +37,7 @@
     <input type="text" name="meta_keywords" class="form-control" value="{{ old('meta_keywords', $page->meta_keywords) }}">
 </div>
 <div class="form-check mb-3">
-    <input class="form-check-input" type="checkbox" name="is_homepage" value="1" {{ old('is_homepage', $page->is_homepage) ? 'checked' : '' }}>
-    <label class="form-check-label">Jadikan sebagai homepage</label>
+    <input class="form-check-input" type="checkbox" name="show_as_button" value="1" {{ old('show_as_button', $page->show_as_button ?? false) ? 'checked' : '' }}>
+    <label class="form-check-label">Tampilkan sebagai Button</label>
 </div>
+

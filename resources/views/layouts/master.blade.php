@@ -15,6 +15,9 @@
     <link href="{{ asset('themes/minia/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('themes/minia/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
     <link href="{{ asset('themes/minia/assets/css/custom.css') }}" rel="stylesheet">
+    <!-- CSS -->
+<link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+
 
     @stack('styles')
   </head>
@@ -43,6 +46,11 @@
     <script src="{{ asset('themes/minia/assets/libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('themes/minia/assets/libs/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('themes/minia/assets/js/app.js') }}"></script>
+     <!-- ckeditor -->
+    <script src="{{ asset('themes/minia/assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
+    <!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
     @stack('scripts')
   </body>
 </html>

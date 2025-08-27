@@ -3,7 +3,7 @@
 @section('title', 'Manajemen Info')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="mb-0">Daftar Info</h3>
         <div>
@@ -16,30 +16,48 @@
         <input type="text" name="search" class="form-control me-2" placeholder="Cari info..." value="{{ request('search') }}">
         <button type="submit" class="btn btn-outline-primary">Cari</button>
     </form>
-    <a href="{{ route('admin.infos.create') }}" class="btn btn-primary">+ Tambah Info</a>
+    <a href="{{ route('admin.infos.create') }}" class="btn btn-primary">+ Tambah</a>
 </div>
 
     <table class="table table-bordered">
-        <thead>
+        <thead class="table-primary">
             <tr>
-                <th>Gambar</th>
+                <th style="width: 50px;">No</th>
+                <th>Gambar/Video</th>
                 <th>Judul</th>
                 <th>Kategori</th>
                 <th>Tag</th>
                 <th>Status</th>
-                <th>Aksi</th>
+                <th width="180px" >Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($infos as $info)
-            <tr>
+            @forelse($infos as $index => $info)
+        <tr>
+            <td>{{ $infos->firstItem() + $index }}</td>
                 <td>
-                        @if($info->gambar)
-                            <img src="{{ asset('storage/' . $info->gambar) }}" alt="Gambar" style="width: 100px;">
-                        @else
-                            <span class="text-muted">Tidak ada gambar</span>
-                        @endif
-                    </td>
+                    @if($info->gambar)
+                        <img src="{{ asset('storage/' . $info->gambar) }}" alt="Gambar" style="width: 100px;">
+                    @endif
+
+                    @if($info->video)
+                        <video src="{{ asset('storage/' . $info->video) }}" width="100" controls></video>
+                    @endif
+
+                    @php
+                        $youtubeUrls = array_filter(json_decode($info->youtube_url ?? '[]', true));
+                    @endphp
+
+                    @if(!empty($youtubeUrls))
+                        @foreach($youtubeUrls as $url)
+                            <a href="{{ $url }}" target="_blank">YouTube</a><br>
+                        @endforeach
+                    @endif
+
+                    @if(!$info->gambar && !$info->video && empty($youtubeUrls))
+                        <span class="text-muted">-</span>
+                    @endif
+                </td>
                 <td>{{ $info->judul }}</td>
                 <td>{{ $info->kategori->nama ?? '-' }}</td>
                 <td>
@@ -61,15 +79,21 @@
                         @endswitch
                     </td>
                 <td>
-                    <a href="{{ route('admin.infos.edit', $info->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                     <div class="btn btn-group">
+                    <a href="{{ route('admin.infos.edit', $info->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>
                     <form action="{{ route('admin.infos.destroy', $info->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button onclick="return confirm('Yakin ingin menghapus?')" class="btn btn-sm btn-danger">Hapus</button>
+                        <button onclick="return confirm('Yakin ingin menghapus?')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus</button>
                     </form>
+                    </div>
                 </td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+            <td colspan="8" class="text-center">Tidak ada info.</td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
     <div class="d-flex justify-content-between mt-3">

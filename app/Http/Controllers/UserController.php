@@ -15,9 +15,14 @@ public function index(Request $request)
     $query = User::query();
 
     if ($request->has('search') && $request->search != '') {
-        $query->where('name', 'like', '%' . $request->search . '%');
-    }
+         $search = $request->search;
 
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('role', 'like', "%{$search}%");
+        });
+    }
     $users = $query->orderBy('id', 'DESC')->paginate(5)->withQueryString();
 
     return view('users.index', compact('users'));

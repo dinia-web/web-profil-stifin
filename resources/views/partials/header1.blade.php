@@ -15,42 +15,47 @@
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <h1 class="logo me-auto"><a href="index.html">Medicio</a></h1> -->
 
-      <nav id="navbar" class="navbar order-last order-lg-0">
-        <ul>
-          <li><a class="nav-link scrollto {{ request()->routeIs('website') ? 'active' : '' }}" 
-         href="{{ route('website') }}">Home</a></li>
-         <li class="dropdown">
-            <a class="nav-link scrollto {{ request()->is('halaman/*') ? 'active' : '' }}"
-              href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}">Tentang STIFIn
-              <i class="bi bi-chevron-down"></i>
-            </a>
-            <ul>
-              <li>
-                <a class="nav-link scrollto {{ request()->is('halaman/sensing') ? 'active' : '' }}"
-                  href="{{ route('pages.show', ['slug' => 'sensing']) }}">Sensing</a>
-              </li>
-              <li> <a class="nav-link scrollto {{ request()->is('halaman/thinking') ? 'active' : '' }}" 
-                  href="{{ route('pages.show', ['slug' => 'thinking']) }}">Thinking</a>
-              </li>
-               <li> <a class="nav-link scrollto {{ request()->is('halaman/intuiting') ? 'active' : '' }}" 
-                  href="{{ route('pages.show', ['slug' => 'intuiting']) }}">Intuiting</a>
-              </li>
-              <li> <a class="nav-link scrollto {{ request()->is('halaman/feeling') ? 'active' : '' }}" 
-                  href="{{ route('pages.show', ['slug' => 'feeling']) }}">Feeling</a>
-              </li>
-              <li> <a class="nav-link scrollto {{ request()->is('halaman/insting') ? 'active' : '' }}" 
-                  href="{{ route('pages.show', ['slug' => 'insting']) }}">Insting</a>
-              </li>
-            </ul>
-          </li>
-          <li> <a class="nav-link scrollto {{ request()->routeIs('artikel') ? 'active' : '' }}" 
-         href="{{ route('artikel') }}">Artikel</a></li>
-          <li><a class="nav-link scrollto {{ request()->routeIs('galeri') ? 'active' : '' }}" 
-         href="{{ route('galeri') }}">Galeri Program</a></li>
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+ <nav id="navbar" class="navbar order-last order-lg-0">
+  <ul>
+    {{-- Menu dinamis dari database --}}
+    @foreach($navbarMenus as $menu)
+      @if($menu->children->count() > 0)
+       @php
+          $isActive = request()->is('halaman/'.$menu->slug.'*');
+          foreach ($menu->children as $child) {
+              if (request()->is('halaman/'.$child->slug.'*')) {
+                  $isActive = true;
+                  break;
+              }
+          }
+      @endphp
+        <li class="dropdown {{ $isActive ? 'active' : '' }}">
+          <a href="{{ $menu->url ? url($menu->url) : route('pages.show', ['slug' => $menu->slug]) }}">
+            {{ $menu->title }} <i class="bi bi-chevron-down"></i>
+          </a>
+          <ul>
+            @foreach($menu->children as $child)
+              <li class="{{ request()->is('halaman/'.$child->slug.'*') ? 'active' : '' }}">
+                <a href="{{ $child->url ? url($child->url) : route('pages.show', ['slug' => $child->slug]) }}">
+                    {{ $child->title }}
+                </a>
+            </li>
 
+            @endforeach
+          </ul>
+        </li>
+      @else
+        <li class="{{ url()->current() == ($menu->url ? url($menu->url) : route('pages.show', ['slug' => $menu->slug])) ? 'active' : '' }}">
+          <a href="{{ $menu->url ? url($menu->url) : route('pages.show', ['slug' => $menu->slug]) }}">
+              {{ $menu->title }}
+          </a>
+        </li>
+      @endif
+    @endforeach
+  </ul>
+
+  <i class="bi bi-list mobile-nav-toggle"></i>
+</nav>
       <a href="{{ route('daftar') }}" class="appointment-btn scrollto"><span class="d-none d-md-inline"></span>Daftar Sekarang!</a>
 
     </div>

@@ -73,7 +73,7 @@ $galleries = Gallery::with('album')
             </div>
             <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
               <h3>{{ $whychPage->title }}</h3>
-              <p class="fst-italic">
+              <p>
                 {!! $whychPage->content !!}
               </p>
               <a class="btn-get-started" href="{{ route('kontak') }}">Contact Us</a>
@@ -85,104 +85,180 @@ $galleries = Gallery::with('album')
 
 <!--  whych choose stifin -->
 
-    <!-- ======= Featured Services Section ======= -->
-    <section id="featured-services" class="featured-services">
-      <div class="container" data-aos="fade-up">
-        <div class="row justify-content-center">
-          <div class="col-12 text-center mb-4">
-            <h3>Keunggulan STIFIn</h3>
-            <p>Apa yang menjadi ciri khas STIFIn?</p>
-          </div>
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
-              <h4 class="title"><a href="">SIMPLE</a></h4>
-              <p class="description">Konsep STIFIn dibagi menjadi lima Unit Kecerdasan dan sembilan Personaliti Genetik. 
-              FOKUS-SATU-HEBAT.</p>
-              <a href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}" class="btn-get-started">Learn More</a>
-            </div>
-          </div>
+  <!-- ======= Featured Services Section ======= -->
+<section id="featured-services" class="featured-services">
+  <div class="container" data-aos="fade-up">
+    <div class="row justify-content-center">
+      <div class="col-12 text-center mb-4">
+        <h3>Keunggulan STIFIn</h3>
+        <p>Apa yang menjadi ciri khas STIFIn?</p>
+      </div>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
-              <h4 class="title"><a href="">AKURAT</a></h4>
-              <p class="description">Konsep STIFIn mengenali platform atau perangkat lunak pengendalian  pikiran manusia. 
-                Tingkat keabsahan dan konsistensinya mencapai 95%.  Sekali penggunaan seumur hidup.</p>
-              <a href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}" class="btn-get-started">Learn More</a>
-            </div>
-          </div>
+      <!-- Dinamis dari tabel infos kategori 5 -->
+      @php
+          $keunggulan = \App\Models\Info::where('kategori_id', 5)
+              ->where('status', 'published')
+              ->latest()
+              ->get();
+      @endphp
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
-              <h4 class="title"><a href="">APLIKATIF</a></h4>
-              <p class="description">Bersifat berkolerasi dengan berbagai aspek kehidupan atau MULTI-ANGLE-FIELD.</p>
-              <a href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}" class="btn-get-started">Learn More</a>
-            </div>
-          </div>
-
-         @php
-            $banner = \App\Models\Gallery::where('category_id', 2)
-                ->where('status', 'published')
-                ->where('is_featured', true)
-                ->orderBy('created_at', 'desc')
-                ->first();
-        @endphp
-
-        @if ($banner)
-            <div class="col-12 text-center mt-4" data-aos="fade-up" data-aos-delay="500">
-                <img src="{{ asset('storage/' . $banner->image_path) }}"
-                    alt="Banner"
-                    class="img-fluid rounded banner-zoom">
-  
-            </div>
-        @endif
-
+      @foreach($keunggulan as $item)
+      <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+        <div class="icon-box" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 + 100 }}">
+          <h4 class="title"><a href="">{{ $item->judul }}</a></h4>
+          <div class="description">{!! $item->isi !!}</div>
+          <a href="{{ route('pages.show', ['slug' => 'tentang-stifin']) }}" class="btn-get-started">Learn More</a>
         </div>
       </div>
-    </section><!-- End Featured Services Section -->
+      @endforeach
+
+      <!-- Banner featured -->
+      @php
+          $banner = \App\Models\Gallery::where('category_id', 2)
+              ->where('status', 'published')
+              ->where('is_featured', true)
+              ->orderBy('created_at', 'desc')
+              ->first();
+      @endphp
+
+      @if ($banner)
+          <div class="col-12 text-center mt-4" data-aos="fade-up" data-aos-delay="500">
+              <img src="{{ asset('storage/' . $banner->image_path) }}" alt="Banner" class="img-fluid rounded banner-zoom">
+          </div>
+      @endif
+
+    </div>
+  </div>
+</section><!-- End Featured Services Section -->
 
 
     <!-- ======= About Us Section ======= -->
     <section id="about" class="about">
       <div class="container" data-aos="fade-up">
 
+        @php
+          // Ambil semua konten About
+          $infos = \App\Models\Info::where('kategori_id', 4)
+              ->where('status', 'published')
+              ->latest()
+              ->get();
+
+          // Siapkan array media untuk carousel
+          $mediaItems = [];
+          foreach($infos as $info) {
+              // Video lokal
+              if($info->video) {
+                  $mediaItems[] = [
+                      'type' => 'video',
+                      'src' => asset('storage/'.$info->video),
+                  ];
+              }
+              // YouTube (bisa banyak)
+              $youtubeUrls = json_decode($info->youtube_url, true) ?? [];
+              foreach($youtubeUrls as $url) {
+                  $videoId = null;
+                  if(str_contains($url,'youtu.be')){
+                      $videoId = basename(parse_url($url, PHP_URL_PATH));
+                  } elseif(str_contains($url,'watch?v=')){
+                      $videoId = \Illuminate\Support\Str::after($url,'v=');
+                  }
+                  if($videoId){
+                      $mediaItems[] = [
+                          'type' => 'youtube',
+                          'src' => $videoId,
+                      ];
+                  }
+              }
+              // Gambar
+              if($info->gambar){
+                  $mediaItems[] = [
+                      'type' => 'image',
+                      'src' => asset('storage/'.$info->gambar),
+                  ];
+              }
+          }
+        @endphp
+
+        @if(count($mediaItems))
         <div class="row">
+          <!-- Kolom Media (Carousel) -->
           <div class="col-lg-6" data-aos="fade-right">
-              <div class="video-wrapper">
-                <iframe
-                  src="https://www.youtube.com/embed/kFhF0ArcMQs"
-                  title="Video STIFIn"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
-              </div>
-          </div>
-          <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
-            <h3>Lebih Dekat dengan STIFIn</h3>
-            <p>
-             Selama lebih dari 13 tahun tes STIFIn telah dipakai ratusan ribu orang  dan telah memberikan manfaat yang luar biasa kepada mereka. Silakan
-             simak video yang tersedia untuk mengetahui STIFIn lebih lanjut. 
-            </p>
-           <div class="btn-group-row">
-              <!-- Baris atas: 3 tombol rata kiri -->
-              <div class="btn-row">
-                <a href="{{ route('pages.show', ['slug' => 'sensing']) }}" class="btn-get-started" style="background-color: #BD1919">Sensing  <i class="fas fa-arrow-right"></i></a>
-                <a href="{{ route('pages.show', ['slug' => 'thinking']) }}" class="btn-get-started" style="background-color: #E6892B">Thinking <i class="fas fa-arrow-right"></i></a>
-                <a href="{{ route('pages.show', ['slug' => 'intuiting']) }}" class="btn-get-started" style="background-color: #60BD19">Intuiting  <i class="fas fa-arrow-right"></i></a>
+            <div id="aboutCarousel" class="carousel slide">
+              <div class="carousel-inner">
+                @foreach($mediaItems as $k => $item)
+                  <div class="carousel-item {{ $k == 0 ? 'active' : '' }}">
+                    @if($item['type'] === 'video')
+                      <video controls class="w-100 rounded shadow">
+                        <source src="{{ $item['src'] }}" type="video/mp4">
+                        Browser kamu tidak mendukung video.
+                      </video>
+                    @elseif($item['type'] === 'youtube')
+                      <iframe src="https://www.youtube.com/embed/{{ $item['src'] }}"
+                              class="w-100 rounded shadow"
+                              style="min-height:340px"
+                              allowfullscreen>
+                      </iframe>
+                    @elseif($item['type'] === 'image')
+                      <img src="{{ $item['src'] }}" class="w-100 rounded shadow" alt="Media About Us">
+                    @endif
+                  </div>
+                @endforeach
               </div>
 
-              <!-- Baris bawah: 2 tombol di tengah -->
+              <!-- Tombol Prev & Next absolute -->
+              <button class="carousel-control-prev custom-control" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="carousel-control-next custom-control" type="button" data-bs-target="#aboutCarousel" data-bs-slide="next">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Kolom Konten -->
+          <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
+            <h3>{{ $infos->first()->judul }}</h3>
+            <p>{!! $infos->first()->isi !!}</p>
+
+            {{-- Tombol dinamis --}}
+            @php
+              $pages = \App\Models\Page::where('show_as_button', true)
+                  ->where('status', 'published')
+                  ->get(['title','slug']);
+              $colors = ['#BD1919','#E6892B','#60BD19','#C9CF15','#3D5977'];
+            @endphp
+
+            <div class="btn-group-row mt-3">
               <div class="btn-row">
-                <a href="{{ route('pages.show', ['slug' => 'feeling']) }}" class="btn-get-started" style="background-color: #C9CF15">Feeling  <i class="fas fa-arrow-right"></i></a>
-                <a href="{{ route('pages.show', ['slug' => 'insting']) }}" class="btn-get-started" style="background-color: #3D5977">Insting  <i class="fas fa-arrow-right"></i></a>
+                @foreach($pages->take(3) as $i => $page)
+                  <a href="{{ url('halaman/'.$page->slug) }}"
+                    class="btn-get-started"
+                    style="background-color: {{ $colors[$i % count($colors)] }}">
+                    {{ $page->title }} <i class="fas fa-arrow-right"></i>
+                  </a>
+                @endforeach
               </div>
+              @if($pages->count() > 3)
+              <div class="btn-row">
+                @foreach($pages->slice(3) as $i => $page)
+                  <a href="{{ url('halaman/'.$page->slug) }}"
+                    class="btn-get-started"
+                    style="background-color: {{ $colors[($i+3) % count($colors)] }}">
+                    {{ $page->title }} <i class="fas fa-arrow-right"></i>
+                  </a>
+                @endforeach
+              </div>
+              @endif
             </div>
           </div>
         </div>
+        @else
+          <p class="text-center">Konten About Us belum tersedia.</p>
+        @endif
 
       </div>
-    </section><!-- End About Us Section -->
-
+    </section>
+    <!-- End About Us Section -->
 
     <!-- ======= Cta Section ======= -->
 <section id="cta" class="cta">
@@ -190,18 +266,41 @@ $galleries = Gallery::with('album')
     <div class="section-title text-center">
       <h3>Kesuksesan STIFIn</h3>
 
-      <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="100">
-          <h4 class="title"><a href="#">Total Cabang</a></h4>
-          <p class="description"><span class="purecounter" data-purecounter-start="0" data-purecounter-end="184" data-purecounter-duration="2">0</span>+</p>
-        </div>
-        <div class="col-lg-4 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="200">
-          <h4 class="title"><a href="#">Total Tes</a></h4>
-          <p class="description"><span class="purecounter" data-purecounter-start="0" data-purecounter-end="3868" data-purecounter-duration="2">0</span>+</p>
-        </div>
-        <div class="col-lg-4 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="300">
-          <h4 class="title"><a href="#">Total Promotor</a></h4>
-          <p class="description"><span class="purecounter" data-purecounter-start="0" data-purecounter-end="695004" data-purecounter-duration="2.5">0</span>+</p>
+            <div class="row justify-content-center">
+              <div class="col-lg-4 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="100">
+              <h4 class="title">Total Cabang</h4>
+              <p class="description">
+                  <span class="purecounter" 
+                        data-purecounter-start="0" 
+                        data-purecounter-end="{{ \App\Models\Branch::count() }}" 
+                        data-purecounter-duration="2">
+                      0
+                  </span>+
+              </p>
+          </div>
+                <!-- Total Tes -->
+          <div class="col-lg-3 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="200">
+              <h4 class="title">Total Tes</h4>
+              <p class="description">
+                  <span class="purecounter" 
+                        data-purecounter-start="0" 
+                        data-purecounter-end="{{ \App\Models\Pendaftaran::whereIn('status', ['2','3'])->count() }}" 
+                        data-purecounter-duration="2">
+                      0
+                  </span>+
+              </p>
+          </div>
+
+          <div class="col-lg-4 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="100">
+            <h4 class="title">Total Promotor</h4>
+            <p class="description">
+                <span class="purecounter" 
+                      data-purecounter-start="0" 
+                      data-purecounter-end="{{ \App\Models\Promotor::count() }}" 
+                      data-purecounter-duration="2">
+                    0
+                </span>+
+            </p>
         </div>
       </div>
     </div>
@@ -209,113 +308,6 @@ $galleries = Gallery::with('album')
 </section>
 <!-- End Cta Section -->
 
-<section id="top-cabang" class="py-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <!-- Tabel: Top Cabang 2025 -->
-      <div class="col-md-5 mb-4">
-        <h5 class="text-center fw-bold mb-3">Top Cabang 2025</h5>
-        <table class="table table-bordered text-center">
-          <thead style="background-color: #3F5771; color: white;">
-            <tr>
-              <th>No.</th>
-              <th>Nama</th>
-              <th>Jumlah</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>2.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>3.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>4.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>5.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>6.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>7.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>8.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>9.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>10.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Tabel: Top Cabang April 2025 -->
-      <div class="col-md-5 mb-4">
-        <h5 class="text-center fw-bold mb-3">Top Cabang April 2025</h5>
-        <table class="table table-bordered text-center">
-          <thead style="background-color: #3F5771; color: white;">
-            <tr>
-              <th>No.</th>
-              <th>Nama</th>
-              <th>Jumlah</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>2.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>3.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>4.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>5.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>6.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>7.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>8.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>9.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>10.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-          </tbody>
-        </table>
-      </div>
-       <div class="col-md-5 mb-4">
-        <h5 class="text-center fw-bold mb-3">Top Ten Promotor 2025</h5>
-        <table class="table table-bordered text-center">
-          <thead style="background-color: #3F5771; color: white;">
-            <tr>
-              <th>No.</th>
-              <th>Nama</th>
-              <th>Jumlah</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>2.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>3.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>4.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>5.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>6.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>7.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>8.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>9.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>10.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Tabel: Top Cabang April 2025 -->
-      <div class="col-md-5 mb-4">
-        <h5 class="text-center fw-bold mb-3">Top Ten Promotor April 2025</h5>
-        <table class="table table-bordered text-center">
-          <thead style="background-color: #3F5771; color: white;">
-            <tr>
-              <th>No.</th>
-              <th>Nama</th>
-              <th>Jumlah</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>2.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>3.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>4.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>5.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>6.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>7.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>8.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>9.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-            <tr><td>10.</td><td>KOTA SLEMAN</td><td>745</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="testimonials" class="testimonials">
   <div class="container" data-aos="fade-up">
@@ -323,140 +315,66 @@ $galleries = Gallery::with('album')
     <div class="section-title">
       <h2>Apa Kata mereka?</h2>
     </div>
+        @php
+          $testimonialGalleries = \App\Models\Gallery::where('category_id', 4)
+              ->where('status', 'published')
+              ->orderByDesc('created_at')
+              ->take(4)
+              ->get();
+              // Ambil konten testimonial dari tabel Testimonial
+          $testimonials = \App\Models\Testimonial::where('status', 'published')
+              ->orderByDesc('created_at')
+              ->take(4)
+              ->get();
+        @endphp
 
-    <div class="row justify-content-center mb-4">
-      <div class="col-md-6 col-lg-3 mb-3">
+     <div class="row justify-content-center mb-4">
+    @foreach($testimonialGalleries as $gallery)
+    <div class="col-md-6 col-lg-3 mb-3">
         <div class="testimonial-video zoom-hover">
-          <img src="/themes/Medicio/assets/img/testi.png" class="img-fluid" alt="Testimoni 1">
+            <img src="{{ asset('storage/' . $gallery->image_path) }}" 
+                 class="img-fluid" 
+                 alt="{{ $gallery->title ?? 'Testimonial' }}">
         </div>
-      </div>
-      <div class="col-md-6 col-lg-3 mb-3">
-        <div class="testimonial-video zoom-hover">
-          <img src="/themes/Medicio/assets/img/testi.png" class="img-fluid" alt="Testimoni 2">
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-3 mb-3">
-        <div class="testimonial-video zoom-hover">
-          <img src="/themes/Medicio/assets/img/testi.png" class="img-fluid" alt="Testimoni 3">
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-3 mb-3">
-        <div class="testimonial-video zoom-hover">
-          <img src="/themes/Medicio/assets/img/testi.png" class="img-fluid" alt="Testimoni 4">
-        </div>
-      </div>
     </div>
+    @endforeach
+</div>
 
-    <div class="testimonials-slider-wrapper">
-      <!-- Tombol panah kiri -->
-      <div class="arrow-btn custom-prev"><i class="bx bx-chevron-left"></i></div>
+<div class="testimonials-slider-wrapper">
+    <!-- Tombol panah kiri -->
+    <div class="arrow-btn custom-prev"><i class="bx bx-chevron-left"></i></div>
 
-      <!-- Swiper -->
-      <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+    <!-- Swiper -->
+    <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="testimonial-item">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                “STIFIn sangat membantu anak saya untuk mengenali bakatnya. Terima kasih tim STIFIn!”
-                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <img src="/themes/Medicio/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-              <h3>Saul Goodman</h3>
-              <h4>Orang Tua</h4>
+            @foreach($testimonials as $testimonial)
+            <div class="swiper-slide">
+                <div class="testimonial-item">
+                    <p>
+                        <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                        {{ $testimonial->message }}
+                        <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                    @if($testimonial->image)
+                        <img src="{{ asset('storage/'.$testimonial->image) }}" class="testimonial-img" alt="{{ $testimonial->name }}">
+                    @endif
+                    <h3>{{ $testimonial->name }}</h3>
+                    <h4>{{ $testimonial->role }}</h4>
+                </div>
             </div>
-          </div>
-
-          <div class="swiper-slide">
-            <div class="testimonial-item">
-              <p>
-                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                “Awalnya ragu, tapi hasilnya luar biasa. Saya jadi tahu bagaimana cara mendidik anak dengan tepat.”
-                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-              </p>
-              <img src="/themes/Medicio/assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-              <h3>Sara Wilsson</h3>
-              <h4>Ibu Rumah Tangga</h4>
-            </div>
-          </div>
-
-          <!-- Tambahkan lagi jika perlu -->
+            @endforeach
         </div>
         <div class="swiper-pagination"></div>
-      </div>
-
-      <!-- Tombol panah kanan -->
-      <div class="arrow-btn custom-next"><i class="bx bx-chevron-right"></i></div>
     </div>
+
+    <!-- Tombol panah kanan -->
+    <div class="arrow-btn custom-next"><i class="bx bx-chevron-right"></i></div>
+</div>
+
 
   </div>
 </section>
 <!-- End Testimonials Section -->
-
-     <!-- ======= Pricing Section ======= -->
-    <section id="pricing" class="pricing">
-      <div class="container" data-aos="fade-up">
-
-        <div class="row justify-content-center">
-          <div class="col-lg-3 col-md-6 mt-4 mt-md-0">
-            <div class="box featured" data-aos="fade-up" data-aos-delay="200">
-              <h3>Personal / Couple</h3>
-              <h4><sup>IDR</sup>649<sup>000</sup></h4>
-              <p><span>biaya /orang</span></p>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li class="na">Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="https://wa.me/6287848631234" target="_blank" class="btn-buy">Click Here</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-4 mt-lg-0">
-            <div class="box" data-aos="fade-up" data-aos-delay="300">
-              <h3>Family / Group</h3>
-              <h4><sup>IDR</sup>599<sup>000</sup></h4>
-              <p><span>biaya /orang</span></p>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li>Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="https://wa.me/6287848631234" target="_blank" class="btn-buy">Click Here</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 mt-4 mt-lg-0">
-            <div class="box" data-aos="fade-up" data-aos-delay="400">
-              <span class="advanced">Advanced</span>
-              <h3>Instansi</h3>
-              <h4><sup>IDR</sup>549<sup>000</sup></h4>
-              <p><span>biaya /orang</span></p>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li>Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="https://wa.me/6287848631234" class="btn-buy">Click Here</a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Pricing Section -->
 
 <!-- ======= artikels Section ======= -->
 <section id="artikels" class="artikels section-bg">

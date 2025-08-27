@@ -25,23 +25,68 @@
     </div>
 
     <div class="mb-3">
-        <label for="tags" class="form-label">Tag</label>
-        <select name="tags[]" id="tags" class="form-control" multiple>
-            @foreach ($tags as $tag)
-                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-            @endforeach
-        </select>
-    </div>
+            <label for="tags" class="form-label">Tag</label>
+            <select name="tags[]" id="tags" class="form-control" multiple>
+                @foreach ($tags as $tag)
+                    <option value="{{ $tag->id }}" {{ collect(old('tags'))->contains($tag->id) ? 'selected' : '' }}>
+                        {{ $tag->name }}
+                    </option>
+                @endforeach
+            </select>
+            <small class="text-muted">Ketik untuk menambah tag baru atau pilih dari daftar.</small>
+        </div>
 
     <div class="mb-3">
         <label for="isi" class="form-label">Konten</label>
-        <textarea name="isi" id="isi" class="form-control" rows="5"></textarea>
+        <textarea id="editor" name="isi" id="isi" class="form-control" rows="5"></textarea>
     </div>
 
     <div class="mb-3">
         <label for="gambar" class="form-label">Gambar</label>
         <input type="file" name="gambar" id="gambar" class="form-control">
     </div>
+      <div class="mb-3">
+        <label>Video (MP4)</label>
+        <input type="file" name="video" class="form-control">
+    </div>
+
+   <div id="video-wrapper">
+    @if(!empty($info->youtube_url))
+        @foreach(json_decode($info->youtube_url, true) as $url)
+            <div class="mb-3 d-flex gap-2">
+                <input type="url" name="youtube_urls[]" class="form-control" value="{{ $url }}">
+                <button type="button" class="btn btn-danger btn-sm remove-video">x</button>
+            </div>
+        @endforeach
+    @else
+        <div class="mb-3 d-flex gap-2">
+            <input type="url" name="youtube_urls[]" class="form-control" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
+    @endif
+</div>
+
+<button type="button" class="btn btn-sm btn-success mb-3" id="add-video">+ Tambah Video</button>
+
+@push('scripts')
+<script>
+document.getElementById('add-video').addEventListener('click', function() {
+    let wrapper = document.getElementById('video-wrapper');
+    let input = document.createElement('div');
+    input.classList.add('mb-3','d-flex','gap-2');
+    input.innerHTML = `
+        <input type="url" name="youtube_urls[]" class="form-control" placeholder="https://www.youtube.com/watch?v=...">
+        <button type="button" class="btn btn-danger btn-sm remove-video">x</button>
+    `;
+    wrapper.appendChild(input);
+
+    // Event hapus input
+    input.querySelector('.remove-video').addEventListener('click', function() {
+        wrapper.removeChild(input);
+    });
+});
+</script>
+@endpush
+
 
     <div class="mb-3">
         <label for="author" class="form-label">Author</label>
@@ -73,6 +118,21 @@
     <button type="submit" class="btn btn-primary">Simpan</button>
     <a href="{{ route('admin.infos.index') }}" class="btn btn-secondary">Batal</a>
 </form>
-
+ @push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    });
+    new TomSelect("#tags", {
+        plugins: ['remove_button'],
+        persist: false,
+        create: true, // bisa ketik tag baru
+    });
+</script>
+@endpush
 </div>
 @endsection

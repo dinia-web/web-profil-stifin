@@ -14,7 +14,13 @@ class AlbumController extends Controller
 
     // Filter pencarian berdasarkan nama album
     if ($request->has('search') && $request->search != '') {
-        $query->where('name', 'like', '%' . $request->search . '%');
+         $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('slug', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
     }
 
     // Urutkan dari terbaru dan pakai pagination

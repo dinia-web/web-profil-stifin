@@ -11,7 +11,14 @@ class ContactController extends Controller
     $query = Contact::query();
 
     if ($request->has('search') && $request->search != '') {
-        $query->where('name', 'like', '%' . $request->search . '%');
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('status', 'like', "%{$search}%")
+              ->orWhere('created_at', 'like', "%{$search}%");
+        });
     }
 
     $contacts = $query->latest()->paginate(5);

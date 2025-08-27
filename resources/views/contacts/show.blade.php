@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <h3>Detail Pesan</h3>
-    <a href="{{ route('contacts.index') }}" class="btn btn-secondary mb-3">Kembali</a>
+    <h4 class="mb-4">Detail Pesan</h4>
+    <a href="{{ route('contacts.index') }}" class="btn btn-secondary mb-3">← Kembali</a>
 
     <div class="card">
         <div class="card-body">

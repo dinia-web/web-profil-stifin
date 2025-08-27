@@ -9,13 +9,19 @@ use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
-    public function index(Request $request)
+   public function index(Request $request)
 {
     $query = Page::query();
 
-    // Jika ada pencarian berdasarkan judul
     if ($request->has('search') && $request->search != '') {
-        $query->where('title', 'like', '%' . $request->search . '%');
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('slug', 'like', "%{$search}%")
+              ->orWhere('published_at', 'like', "%{$search}%")
+              ->orWhere('status', 'like', "%{$search}%");
+        });
     }
 
     $pages = $query->orderByDesc('created_at')->paginate(5)->withQueryString();
@@ -29,13 +35,14 @@ class PageController extends Controller
         return view('admin.pages.create');
     }
 
-  public function store(Request $request)
+public function store(Request $request)
 {
     $request->validate([
         'title' => 'required|unique:pages,title',
         'slug' => 'nullable|unique:pages,slug',
         'content' => 'required',
-        'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048', // tambah validasi file gambar
+        'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'show_as_button' => 'nullable|boolean', // tambahin validasi
     ]);
 
     $slug = $request->slug ?: Str::slug($request->title);
@@ -56,10 +63,12 @@ class PageController extends Controller
         'meta_description' => $request->meta_description,
         'meta_keywords' => $request->meta_keywords,
         'is_homepage' => $request->is_homepage ? 1 : 0,
+        'show_as_button' => $request->show_as_button ? 1 : 0, // tambahin
     ]);
 
     return redirect()->route('admin.pages.index')->with('success', 'Halaman berhasil dibuat.');
 }
+
 
 
     public function edit(Page $page)
@@ -74,6 +83,7 @@ class PageController extends Controller
         'slug' => 'nullable|unique:pages,slug,' . $page->id,
         'content' => 'required',
         'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'show_as_button' => 'nullable|boolean', // validasi juga
     ]);
 
     $slug = $request->slug ?: Str::slug($request->title);
@@ -88,17 +98,14 @@ class PageController extends Controller
         'meta_description' => $request->meta_description,
         'meta_keywords' => $request->meta_keywords,
         'is_homepage' => $request->is_homepage ? 1 : 0,
+        'show_as_button' => $request->show_as_button ? 1 : 0, // tambahin
     ];
 
     if ($request->hasFile('featured_image')) {
-        // Hapus gambar lama jika ada
         if ($page->featured_image && \Storage::disk('public')->exists($page->featured_image)) {
             \Storage::disk('public')->delete($page->featured_image);
         }
-        // Simpan gambar baru
         $data['featured_image'] = $request->file('featured_image')->store('pages', 'public');
-    } else {
-        // Kalau tidak upload gambar baru, jangan ubah field featured_image
     }
 
     $page->update($data);

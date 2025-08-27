@@ -234,7 +234,7 @@ h6 {
   padding: 10px 0 10px 30px;
   font-family: "Roboto", sans-serif;
   font-size: 13px;
-  color: #868686;
+  color: #8a8a8a;
   white-space: nowrap;
   transition: 0.3s;
   text-transform: uppercase;
@@ -249,11 +249,12 @@ h6 {
 }
 
 .navbar a:hover,
-.navbar .active,
-.navbar .active:focus,
-.navbar li:hover>a {
-  color: #3F5771;
+.navbar li.active > a,
+.navbar li.active > a:focus,
+.navbar li:hover > a {
+    color: #3f5771;
 }
+
 
 .navbar .dropdown ul {
   display: block;
@@ -2063,4 +2064,63 @@ section {
 
 .banner-zoom:hover {
   transform: scale(1.1);
+}
+ .btn-group-row {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: left;
+    }
+    .btn-row {
+        display: flex;
+        gap: 15px;
+    }
+    .btn-get-started {
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+    .btn-get-started i {
+        margin-left: 8px;
+    }
+    .btn-get-started:hover {
+        opacity: 0.85;
+        transform: translateY(-2px);
+    }
+
+    .video-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tombol absolute untuk carousel */
+.carousel-control-prev.custom-control,
+.carousel-control-next.custom-control {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45px;
+  height: 45px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.carousel-control-prev.custom-control:hover,
+.carousel-control-next.custom-control:hover {
+  background: rgba(0,0,0,0.7);
+}
+
+.carousel-control-prev.custom-control i,
+.carousel-control-next.custom-control i {
+  font-size: 20px;
+  color: #fff;
 }

@@ -35,13 +35,21 @@
             <input type="number" name="order" class="form-control" value="{{ old('order', $menu->order ?? 0) }}">
         </div>
 
-        <div class="mb-3">
-            <label>Status</label>
-            <select name="status" class="form-control">
-                <option value="active" {{ $menu->status == 'active' ? 'selected' : '' }}>Aktif</option>
-                <option value="inactive" {{ $menu->status == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
-            </select>
-        </div>
+      <div class="mb-3">
+    <label class="form-label d-block">Status</label>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="status" id="status_active" value="active"
+            {{ old('status', $menu->status ?? 'active') == 'active' ? 'checked' : '' }}>
+        <label class="form-check-label" for="status_active">Aktif</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="status" id="status_inactive" value="inactive"
+            {{ old('status', $menu->status ?? 'active') == 'inactive' ? 'checked' : '' }}>
+        <label class="form-check-label" for="status_inactive">Tidak Aktif</label>
+    </div>
+</div>
 
         <button class="btn btn-primary">Update</button>
         <a href="{{ route('menus.index') }}" class="btn btn-secondary">Batal</a>

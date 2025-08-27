@@ -3,7 +3,7 @@
 @section('title', 'Manajemen User')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
 <h2 class="mb-4">Manajemen User</h2>
 
 {{-- Notifikasi sukses --}}
@@ -17,38 +17,39 @@
         <input type="text" name="search" class="form-control me-2" placeholder="Cari user..." value="{{ request('search') }}">
         <button type="submit" class="btn btn-outline-primary">Cari</button>
     </form>
-    <a href="{{ route('users.create') }}" class="btn btn-primary">+ Tambah User</a>
+    <a href="{{ route('users.create') }}" class="btn btn-primary">+ Tambah</a>
 </div>
 
 {{-- Tabel Data User --}}
 
 <div class="table-responsive">
 <table class="table table-bordered">
-<thead>
+<thead class="table-primary">
 <tr>
-<th width="5%">No</th>
+<th style="width: 50px;">No</th>
 <th>Nama</th>
 <th>Email</th>
 <th>Role</th>
-<th width="20%">Aksi</th>
+<th width="180px" >Aksi</th>
 </tr>
 </thead>
 <tbody>
 @forelse($users as $index => $user)
 <tr>
-<td>{{ $index + 1 }}</td>
+<td>{{ $users->firstItem() + $index }}</td>
 <td>{{ $user->name }}</td>
 <td>{{ $user->email }}</td>
 <td>{{ ucfirst($user->role) }}</td>
 <td>
-<a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">Edit</a>
-
+<div class="btn btn-group">
+<a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>
 <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline"
 onsubmit="return confirm('Yakin ingin menghapus user ini?')">
 @csrf
 @method('DELETE')
-<button class="btn btn-sm btn-danger">Hapus</button>
+<button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus</button>
 </form>
+</div>
 </td>
 </tr>
 @empty

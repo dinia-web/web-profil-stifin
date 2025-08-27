@@ -14,9 +14,18 @@ class DownloadController extends Controller
     $query = Download::with('category')->latest();
 
     if ($request->has('search') && $request->search != '') {
-        $query->where('title', 'like', '%' . $request->search . '%');
-    }
+         $search = $request->search;
 
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('status', 'like', "%{$search}%");
+        })
+        // Relasi kategori
+        ->orWhereHas('category', function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%");
+        });
+    }
+       
     $downloads = $query->paginate(5)->withQueryString();
 
     return view('downloads.index', compact('downloads'));

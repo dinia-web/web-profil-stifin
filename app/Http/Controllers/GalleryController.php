@@ -16,7 +16,20 @@ class GalleryController extends Controller
     $query = Gallery::with(['category', 'album']);
 
     if ($request->has('search') && $request->search != '') {
-        $query->where('title', 'like', '%' . $request->search . '%');
+         $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('status', 'like', "%{$search}%")
+              ->orWhere('is_featured', 'like', "%{$search}%");
+        })
+        // Relasi kategori
+        ->orWhereHas('category', function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%");
+        })
+         ->orWhereHas('album', function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%");
+        });
     }
 
     $galleries = $query->latest()->paginate(5); // 10 item per halaman

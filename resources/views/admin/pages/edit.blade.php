@@ -10,5 +10,16 @@
         <button class="btn btn-primary">Update</button>
         <a href="{{ route('admin.pages.index') }}" class="btn btn-secondary">Batal</a>
     </form>
+     @push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    });
+</script>
+@endpush
 </div>
 @endsection

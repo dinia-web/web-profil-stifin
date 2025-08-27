@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title', 'Daftar Tes STIFIn')
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <h4 class="mb-4">Daftar Pendaftaran Tes STIFIn</h4>
      <div class="mb-3 d-flex justify-content-between">
     <form method="GET" action="{{ route('admin.pendaftaran.index') }}" class="d-flex">
@@ -15,22 +15,25 @@
     @endif
 
     <table class="table table-bordered">
-        <thead>
+        <thead class="table-primary">
             <tr>
+                <th style="width: 50px;">No</th>
                 <th>Nama</th>
                 <th>WhatsApp</th>
                 <th>Email</th>
                 <th>Paket</th>
                 <th>Lokasi</th>
-                <th>Sidik Jari</th>
+                <th>Upload</th>
                 <th>Catatan</th>
                 <th>Tanggal</th>
-                <th>Aksi</th>
+                <th>Status</th>
+                <th width="190px">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @forelse($pendaftaran as $p)
-                <tr>
+            @forelse($pendaftaran as $index => $p)
+        <tr>
+            <td>{{ $pendaftaran->firstItem() + $index }}</td>
                     <td>{{ $p->nama }}</td>
                     <td>{{ $p->whatsapp }}</td>
                     <td>{{ $p->email }}</td>
@@ -45,17 +48,21 @@
                     </td>
                     <td>{{ $p->catatan }}</td>
                     <td>{{ $p->created_at->format('d-m-Y H:i') }}</td>
+                    <td>{{ $p->status_text }}</td>
                     <td>
+                        <div class="btn btn-group">
+                        <a href="{{ route('admin.pendaftaran.show', $p->id) }}" class="btn btn-sm btn-success"><i class="fa fa-eye"></i> Lihat</a>
                         <form action="{{ route('admin.pendaftaran.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Yakin hapus?')">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm">Hapus</button>
+                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Hapus</button>
                         </form>
+                        </div>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="9" class="text-center">Belum ada pendaftaran</td>
+                    <td colspan="9" class="text-center">Tidak ada pendaftaran</td>
                 </tr>
             @endforelse
         </tbody>

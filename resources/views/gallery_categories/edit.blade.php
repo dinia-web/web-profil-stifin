@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Edit Kategori Galeri</h2>
-    <form action="{{ route('gallery-categories.update', $galleryCategory->id) }}" method="POST">
+    <form action="{{ route('gallery_categories.update', $galleryCategory->id) }}" method="POST">
         @csrf @method('PUT')
         <div class="mb-3">
             <label>Nama Kategori</label>
@@ -15,7 +15,7 @@
         </div>
 
         <button class="btn btn-primary">Update</button>
-        <a href="{{ route('gallery-categories.index') }}" class="btn btn-secondary">Batal</a>
+        <a href="{{ route('gallery_categories.index') }}" class="btn btn-secondary">Batal</a>
     </form>
     </form>
 </div>

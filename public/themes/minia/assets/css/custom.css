@@ -71,3 +71,40 @@ body[data-sidebar-size=sm] .navbar-brand-box .logo-sm {
         align-self: flex-end;
     }
 }
+:root {
+    --bs-sidebar-menu-item-color: #8a8a8a; /* default (tidak aktif) */
+    --bs-sidebar-menu-item-hover-color: #3F5771; /* hover */
+    --bs-sidebar-menu-item-active-color: #3F5771; /* aktif */
+}
+/* Default (tidak aktif) */
+.vertical-menu a,
+.vertical-menu a i,
+.vertical-menu a span {
+    color: var(--bs-sidebar-menu-item-color) !important;
+}
+
+/* Hover */
+.vertical-menu a:hover,
+.vertical-menu a:hover i,
+.vertical-menu a:hover span {
+    color: var(--bs-sidebar-menu-item-hover-color) !important;
+}
+
+/* Active */
+.vertical-menu .mm-active > a,
+.vertical-menu .mm-active > a i,
+.vertical-menu .mm-active > a span {
+    color: var(--bs-sidebar-menu-item-active-color) !important;
+}
+/* Panah default (belum dibuka) */
+.has-submenu > a .menu-arrow::after {
+    content: ">";
+    float: right;
+    transition: transform 0.3s ease;
+}
+
+/* Saat submenu aktif / dibuka */
+.has-submenu.mm-active > a .menu-arrow::after,
+.has-submenu > a.active .menu-arrow::after {
+    content: "v";
+}

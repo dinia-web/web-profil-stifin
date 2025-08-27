@@ -15,7 +15,12 @@ class KategoriController extends Controller
     $query = Kategori::query();
 
     if ($request->has('search') && $request->search != '') {
-        $query->where('nama', 'like', '%' . $request->search . '%');
+         $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('nama', 'like', "%{$search}%")
+              ->orWhere('deskripsi', 'like', "%{$search}%");
+        });
     }
 
     $kategoris = $query->orderBy('created_at', 'desc')->paginate(5); // tampilkan 10 per halaman

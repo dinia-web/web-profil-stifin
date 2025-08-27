@@ -8,19 +8,28 @@ use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
-    public function index(Request $request)
+public function index(Request $request)
 {
-    $query = Menu::query();
+    $query = Menu::with('parent'); // tambahkan relasi parent
 
     if ($request->has('search') && $request->search != '') {
-        $query->where('name', 'like', '%' . $request->search . '%');
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('slug', 'like', "%{$search}%")
+              ->orWhere('url', 'like', "%{$search}%")
+              ->orWhere('parent_id', 'like', "%{$search}%")
+              ->orWhere('order', 'like', "%{$search}%")
+              ->orWhere('status', 'like', "%{$search}%");
+        });
     }
 
-    $menus = $query->orderBy('order')->paginate(5)->withQueryString(); // pagination ditambahkan
+    // jangan pakai whereNull('parent_id') biar anak ikut tampil
+    $menus = $query->orderBy('order')->paginate(5)->withQueryString();
 
     return view('menus.index', compact('menus'));
 }
-
 
     public function create()
     {
@@ -28,24 +37,24 @@ class MenuController extends Controller
         return view('menus.create', compact('parents'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required',
-            'status' => 'required|in:active,inactive',
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'title' => 'required',
+        // hapus required di status, karena kita handle manual
+    ]);
+Menu::create([
+    'title' => $request->title,
+    'slug' => Str::slug($request->title),
+    'url' => $request->url,
+    'parent_id' => $request->parent_id,
+    'order' => $request->order ?? 0,
+    'status' => $request->status ?? 'active', // pakai nilai dari radio
+]);
 
-        Menu::create([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title),
-            'url' => $request->url,
-            'parent_id' => $request->parent_id,
-            'order' => $request->order ?? 0,
-            'status' => $request->status,
-        ]);
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil dibuat');
-    }
+    return redirect()->route('menus.index')->with('success', 'Menu berhasil dibuat');
+}
 
     public function edit($id)
     {
@@ -54,26 +63,25 @@ class MenuController extends Controller
         return view('menus.edit', compact('menu', 'parents'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $menu = Menu::findOrFail($id);
+   public function update(Request $request, $id)
+{
+    $menu = Menu::findOrFail($id);
 
-        $request->validate([
-            'title' => 'required',
-            'status' => 'required|in:active,inactive',
-        ]);
+    $request->validate([
+        'title' => 'required',
+    ]);
 
-        $menu->update([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title),
-            'url' => $request->url,
-            'parent_id' => $request->parent_id,
-            'order' => $request->order ?? 0,
-            'status' => $request->status,
-        ]);
+   $menu->update([
+    'title' => $request->title,
+    'slug' => Str::slug($request->title),
+    'url' => $request->url,
+    'parent_id' => $request->parent_id,
+    'order' => $request->order ?? 0,
+    'status' => $request->status ?? 'active', // pakai nilai dari radio
+]);
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui');
-    }
+    return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui');
+}
 
     public function destroy($id)
     {

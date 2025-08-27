@@ -14,9 +14,14 @@ class GalleryCategoryController extends Controller
 
     // Jika ada pencarian berdasarkan nama kategori
     if ($request->has('search') && $request->search != '') {
-        $query->where('name', 'like', '%' . $request->search . '%');
-    }
+         $search = $request->search;
 
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('slug', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
+    }
     // Urutkan terbaru dan paginasi
     $categories = $query->orderByDesc('created_at')->paginate(5)->withQueryString();
 
@@ -42,7 +47,7 @@ class GalleryCategoryController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('gallery-categories.index')->with('success', 'Kategori galeri berhasil ditambahkan.');
+        return redirect()->route('gallery_categories.index')->with('success', 'Kategori galeri berhasil ditambahkan.');
     }
 
     public function edit(GalleryCategory $galleryCategory)
@@ -63,12 +68,12 @@ class GalleryCategoryController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('gallery-categories.index')->with('success', 'Kategori galeri berhasil diperbarui.');
+        return redirect()->route('gallery_categories.index')->with('success', 'Kategori galeri berhasil diperbarui.');
     }
 
     public function destroy(GalleryCategory $galleryCategory)
     {
         $galleryCategory->delete();
-        return redirect()->route('gallery-categories.index')->with('success', 'Kategori galeri dihapus.');
+        return redirect()->route('gallery_categories.index')->with('success', 'Kategori galeri dihapus.');
     }
 }

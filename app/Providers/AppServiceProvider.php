@@ -19,17 +19,20 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot()
-    {
-        // Kirim data menu ke layout
-        View::composer('layouts.menu', function ($view) {
-            $menus = Menu::with('children')
-                ->whereNull('parent_id')
-                ->where('status', 'active')
-                ->orderBy('order')
-                ->get();
+   public function boot()
+{
+    View::composer('*', function ($view) {
+        $navbarMenus = Menu::whereNull('parent_id')
+            ->where('status', 'active')
+            ->with(['children' => function ($q) {
+                $q->where('status', 'active')->orderBy('order');
+            }])
+            ->orderBy('order')
+            ->get(); // penting: get(), bukan paginate()
 
-            $view->with('mainMenus', $menus);
-        });
-    }
+        $view->with('navbarMenus', $navbarMenus); // <-- beda nama
+    });
+}
+
+
 }
