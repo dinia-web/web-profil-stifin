@@ -23,10 +23,10 @@
         <div >
               <div class="text-center">
                 @if($info->gambar)
-                    <img src="{{ asset('storage/' . $info->gambar) }}" class="img-fluid mb-4" alt="{{ $info->judul }}">
+                    <img src="{{ asset('storage/' . $info->gambar) }}" class="img-fluid mb-3" alt="{{ $info->judul }}">
                 @endif
 
-                <p class="text-muted">
+                <p class="text-muted mb-4">
                     Dipublikasikan pada {{ \Carbon\Carbon::parse($info->published_at)->format('d M Y') }} |
                     Kategori: {{ $info->kategori->nama ?? '-' }}
                 </p>

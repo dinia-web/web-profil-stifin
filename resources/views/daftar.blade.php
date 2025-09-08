@@ -94,7 +94,7 @@
   </div>
 </section>
 
- <!-- ======= Bonus Tambahan Section ======= -->
+<!-- ======= Bonus Tambahan Section ======= -->
 <section id="bonus" class="faq section-bg">
   <div class="container" data-aos="fade-up">
 
@@ -102,68 +102,30 @@
       <h3>Bonus Tambahan Bagi Anda yang Daftar Hari Ini</h3>
     </div>
 
+    @php
+      // Ambil semua bonus berdasarkan kategori 'bonus tambahan'
+      $infos = \App\Models\Info::where('kategori_id', 6)
+                  ->where('status', 'published')
+                  ->orderBy('id', 'asc')
+                  ->get();
+    @endphp
+
     <ul class="faq-list">
-
-      <li>
-        <div data-bs-toggle="collapse" class="collapsed question" href="#bonus1">
-          1. Video Trik Psikologi Penjualan ~ Rp 199.000
-          <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i>
-        </div>
-        <div id="bonus1" class="collapse" data-bs-parent=".faq-list">
-          <p>
-            Pelajari trik psikologi yang terbukti meningkatkan penjualan secara instan dan tepat sasaran.
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <div data-bs-toggle="collapse" class="collapsed question" href="#bonus2">
-          2. Video Sustainable Profit Matrix Strategy ~ Rp 4.800.000
-          <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i>
-        </div>
-        <div id="bonus2" class="collapse" data-bs-parent=".faq-list">
-          <p>
-            Strategi membangun bisnis berkelanjutan dengan keuntungan konsisten dan terukur.
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <div data-bs-toggle="collapse" class="collapsed question" href="#bonus3">
-          3. Video Amazing Personal Branding ~ Rp 2.499.000
-          <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i>
-        </div>
-        <div id="bonus3" class="collapse" data-bs-parent=".faq-list">
-          <p>
-            Panduan membangun personal branding yang kuat dan menarik audiens secara organik.
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <div data-bs-toggle="collapse" class="collapsed question" href="#bonus4">
-          4. Checklist 30 Amazing Personal Branding ~ Rp 1.499.000
-          <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i>
-        </div>
-        <div id="bonus4" class="collapse" data-bs-parent=".faq-list">
-          <p>
-            Checklist praktis untuk memastikan semua aspek penting personal branding Anda sudah lengkap dan optimal.
-          </p>
-        </div>
-      </li>
-
-      <li>
-        <div data-bs-toggle="collapse" class="collapsed question" href="#bonus5">
-          5. Mindmap Extreme Growth Hack ~ Rp 1.997.000
-          <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i>
-        </div>
-        <div id="bonus5" class="collapse" data-bs-parent=".faq-list">
-          <p>
-            Mindmap berisi strategi pertumbuhan cepat yang biasa digunakan startup besar dan tim growth hacker.
-          </p>
-        </div>
-      </li>
-
+      @foreach($infos as $index => $info)
+        <li>
+          <div data-bs-toggle="collapse" class="collapsed question" href="#bonus{{ $index }}">
+            {{ $index+1 }}. {{ $info->judul }} 
+            @if($info->harga)
+              ~ Rp {{ number_format($info->harga, 0, ',', '.') }}
+            @endif
+            <i class="bi bi-chevron-down icon-show"></i>
+            <i class="bi bi-chevron-up icon-close"></i>
+          </div>
+          <div id="bonus{{ $index }}" class="collapse" data-bs-parent=".faq-list">
+            <p>{!! $info->isi !!}</p>
+          </div>
+        </li>
+      @endforeach
     </ul>
 
   </div>

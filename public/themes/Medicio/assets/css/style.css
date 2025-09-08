@@ -855,13 +855,16 @@ section {
 }
 
 .cta .section-title {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
+}
+.cta .section {
+  margin-bottom: 50px;
 }
 
 .cta h3 {
   font-size: 28px;
   font-weight: 700;
-  padding-bottom: 30px;
+  padding-bottom: 5px;
 }
 
 .cta .title {
@@ -1029,7 +1032,7 @@ section {
 
 .arrow-btn {
   position: absolute;
-  top: 40%;
+  top: 45%;
   transform: translateY(-50%);
   background-color: white;
   color: #3F5771;
@@ -2104,8 +2107,8 @@ section {
 .carousel-control-next.custom-control {
   top: 50%;
   transform: translateY(-50%);
-  width: 45px;
-  height: 45px;
+  width: 35px;
+  height: 35px;
   background: rgba(0,0,0,0.5);
   border-radius: 50%;
   display: flex;
@@ -2121,6 +2124,6 @@ section {
 
 .carousel-control-prev.custom-control i,
 .carousel-control-next.custom-control i {
-  font-size: 20px;
+  font-size: 16px;
   color: #fff;
 }

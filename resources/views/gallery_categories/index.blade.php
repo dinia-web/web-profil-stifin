@@ -2,7 +2,7 @@
 @section('title', 'Manajemen Kategori Galeri')
 @section('content')
 <div class="container-fluid">
-    <h2 class="mb-4">Manajemen Kategori Galeri</h2>
+    <h2 class="mb-4">Manajemen Kategori</h2>
     <div class="mb-3 d-flex justify-content-between">
     {{-- Form Pencarian --}}
     <form method="GET" action="{{ route('gallery_categories.index') }}" class="d-flex">

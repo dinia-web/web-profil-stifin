@@ -41,13 +41,14 @@
         <textarea id="editor" name="isi" id="isi" class="form-control" rows="5"></textarea>
     </div>
 
+     <div class="mb-3">
+            <label for="harga" class="form-label">Harga</label>
+            <input type="number" name="harga" id="harga" class="form-control" value="{{ old('harga') }}" placeholder="contoh: 50000">
+        </div>
+
     <div class="mb-3">
         <label for="gambar" class="form-label">Gambar</label>
         <input type="file" name="gambar" id="gambar" class="form-control">
-    </div>
-      <div class="mb-3">
-        <label>Video (MP4)</label>
-        <input type="file" name="video" class="form-control">
     </div>
 
    <div id="video-wrapper">
@@ -59,7 +60,8 @@
             </div>
         @endforeach
     @else
-        <div class="mb-3 d-flex gap-2">
+        <div class="mb-3">
+            <label for="youtube_url" class="form-label">Url Youtube</label>
             <input type="url" name="youtube_urls[]" class="form-control" placeholder="https://www.youtube.com/watch?v=...">
         </div>
     @endif

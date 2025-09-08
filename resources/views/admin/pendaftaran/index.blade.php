@@ -2,7 +2,7 @@
 @section('title', 'Daftar Tes STIFIn')
 @section('content')
 <div class="container-fluid">
-    <h4 class="mb-4">Daftar Pendaftaran Tes STIFIn</h4>
+    <h3 class="mb-4">Daftar Pendaftaran Tes STIFIn</h3>
      <div class="mb-3 d-flex justify-content-between">
     <form method="GET" action="{{ route('admin.pendaftaran.index') }}" class="d-flex">
         <input type="text" name="search" class="form-control me-2" placeholder="Cari pendaftar..." value="{{ request('search') }}">

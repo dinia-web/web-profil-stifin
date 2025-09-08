@@ -44,11 +44,11 @@
             <div class="card shadow-sm border-0" style="background-color: #fd7e14; color: white;">
                 <div class="card-body d-flex align-items-center justify-content-between">
                     <div>
-                        <h6 class="fw-bold">Pembayaran Terkonfirmasi</h6>
-                        <h4 class="mb-0">{{ $pembayaranTerkonfirmasi ?? 98 }}</h4>
+                        <h6 class="fw-bold">Total Cabang</h6>
+                        <h4 class="mb-0">{{ \App\Models\Branch::count() }}</h4>
                     </div>
                     <div>
-                        <i class="bx bx-wallet" style="font-size: 2.5rem;"></i>
+                        <i class="bx bx-building" style="font-size: 2.5rem;"></i>
                     </div>
                 </div>
             </div>

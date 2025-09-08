@@ -42,6 +42,11 @@
             <textarea id="editor" name="isi" id="isi" class="form-control" rows="5">{{ old('isi', $info->isi) }}</textarea>
         </div>
 
+          <div class="mb-3">
+            <label for="harga" class="form-label">Harga</label>
+            <input type="number" name="harga" id="harga" class="form-control" value="{{ old('harga', $info->harga) }}" placeholder="contoh: 50000">
+        </div>
+
          <div class="mb-3">
             <label for="gambar" class="form-label">Gambar (opsional)</label>
             <input type="file" name="gambar" id="gambar" class="form-control">
@@ -50,13 +55,6 @@
                 <img src="{{ asset('storage/'.$info->gambar) }}" alt="gambar" style="max-height: 150px;">
             @endif
         </div>
-         <div class="mb-3">
-        <label>Video (MP4)</label>
-        @if($info->video)
-            <video src="{{ asset('storage/'.$info->video) }}" controls width="200" class="mb-2"></video>
-        @endif
-        <input type="file" name="video" class="form-control">
-    </div>
 
 <div id="video-wrapper">
     @if(!empty($info->youtube_url))
@@ -67,6 +65,7 @@
         @endforeach
     @else
         <div class="mb-3">
+            <label for="youtube_url" class="form-label">Url Youtube</label>
             <input type="url" name="youtube_urls[]" class="form-control" placeholder="https://www.youtube.com/watch?v=...">
         </div>
     @endif

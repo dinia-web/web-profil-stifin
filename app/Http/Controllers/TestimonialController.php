@@ -26,6 +26,16 @@ class TestimonialController extends Controller
     return view('testimonials.index', compact('testimonials'));
 }
 
+public function showLoginForm()
+{
+      $testimonials = Testimonial::where('status', 'published')
+        ->latest()
+        ->take(3)
+        ->get();
+
+    return view('auth.login', compact('testimonials'));
+}
+
     // Tampilkan form tambah testimonial
     public function create()
     {

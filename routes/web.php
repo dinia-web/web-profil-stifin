@@ -78,3 +78,7 @@ Route::resource('branches', BranchController::class);
 Route::resource('promotors', PromotorController::class);
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::put('admin/pendaftaran/{id}/status', [PendaftaranController::class, 'updateStatus'])->name('admin.pendaftaran.updateStatus');
+Route::get('login', function () {
+    $testimonials = \App\Models\Testimonial::latest()->take(3)->get();
+    return view('auth.login', compact('testimonials'));
+})->name('login');

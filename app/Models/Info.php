@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Info extends Model
 {
     protected $fillable = [
-        'kategori_id', 'judul', 'slug', 'isi', 'gambar','video',
+        'kategori_id', 'judul', 'slug', 'isi', 'harga', 'gambar',
     'youtube_url','author', 'is_homepage', 'status', 'published_at'
     ];
 

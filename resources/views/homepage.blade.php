@@ -187,12 +187,7 @@ $galleries = Gallery::with('album')
               <div class="carousel-inner">
                 @foreach($mediaItems as $k => $item)
                   <div class="carousel-item {{ $k == 0 ? 'active' : '' }}">
-                    @if($item['type'] === 'video')
-                      <video controls class="w-100 rounded shadow">
-                        <source src="{{ $item['src'] }}" type="video/mp4">
-                        Browser kamu tidak mendukung video.
-                      </video>
-                    @elseif($item['type'] === 'youtube')
+                    @if($item['type'] === 'youtube')
                       <iframe src="https://www.youtube.com/embed/{{ $item['src'] }}"
                               class="w-100 rounded shadow"
                               style="min-height:340px"
@@ -264,7 +259,10 @@ $galleries = Gallery::with('album')
 <section id="cta" class="cta">
   <div class="container" data-aos="zoom-in">
     <div class="section-title text-center">
-      <h3>Kesuksesan STIFIn</h3>
+          <div class="section">
+            <h3>Kesuksesan STIFIn</h3>
+            <p>Saat ini tes STIFIn sudah digunakan di berbagai belahan dunia dan mencapai <br> kesuksesan untuk para klien, promotor, dan cabangnya.</p>
+          </div>
 
             <div class="row justify-content-center">
               <div class="col-lg-4 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="100">

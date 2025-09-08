@@ -40,10 +40,6 @@
                         <img src="{{ asset('storage/' . $info->gambar) }}" alt="Gambar" style="width: 100px;">
                     @endif
 
-                    @if($info->video)
-                        <video src="{{ asset('storage/' . $info->video) }}" width="100" controls></video>
-                    @endif
-
                     @php
                         $youtubeUrls = array_filter(json_decode($info->youtube_url ?? '[]', true));
                     @endphp
@@ -54,7 +50,7 @@
                         @endforeach
                     @endif
 
-                    @if(!$info->gambar && !$info->video && empty($youtubeUrls))
+                    @if(!$info->gambar && empty($youtubeUrls))
                         <span class="text-muted">-</span>
                     @endif
                 </td>
