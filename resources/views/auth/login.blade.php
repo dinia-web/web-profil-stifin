@@ -33,18 +33,18 @@
             <div class="container-fluid p-0">
                 <div class="row g-0">
                     <div class="col-xxl-3 col-lg-4 col-md-5">
-                        <div class="auth-full-page-content d-flex p-sm-5 p-4">
+                        <div class="auth-full-page-content d-flex p-sm-5 p-5">
                             <div class="w-100">
-                                <div class="d-flex flex-column h-100">
-                                    <div class="mb-2 mb-md-2 text-center">
-                                        <a href="dashboard" class="d-block auth-logo">
-                                           <img src="{{ asset('themes/minia/assets/images/logo.png') }}" alt="" height="60">
+                               <div class="d-flex flex-column h-100">
+                                    <div class=" text-center">
+                                        <a href="{{ route('dashboard') }}" class="d-block auth-logo">
+                                           <img src="{{ asset('themes/minia/assets/images/logo.png') }}" alt="" height="65">
                                         </a>
                                     </div>
                                     <div class="auth-content my-auto">
                                         <div class="text-center">
                                             <h5 class="mb-0">Welcome Back !</h5>
-                                            <p class="text-muted mt-2">Sign in to continue to STIFIn.</p>
+                                            <p class="text-muted mb-2 mt-2">Sign in to continue to STIFIn Smart Solutions.</p>
                                         </div>
                                         @if (session('error'))
                                         <div class="alert alert-danger">{{ session('error') }}</div>
@@ -71,13 +71,13 @@
                                             <div class="row mb-4">
                                                 
                                             </div>
-                                            <div class="mb-1">
+                                            <div>
                                                 <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="mt-1 mt-md-1 text-center">
-                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> STIFIn   . Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                                    <div class="text-center">
+                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> Dnf  . STIFIn Smart Solutions</p>
                                     </div>
                                 </div>
                             </div>
@@ -87,73 +87,8 @@
                     <!-- end col -->
                     <div class="col-xxl-9 col-lg-8 col-md-7">
                         <div class="auth-bg pt-md-5 p-4 d-flex">
-                            <div class="bg-overlay bg-primary"></div>
-                            <ul class="bg-bubbles">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
                             <!-- end bubble effect -->
                            <div class="row justify-content-center align-items-center">
-    <div class="col-xl-7">
-        <div class="p-0 p-sm-4 px-xl-0">
-            <div id="reviewcarouselIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
-                
-                <!-- Indicators otomatis sesuai jumlah data -->
-                <div class="carousel-indicators carousel-indicators-rounded justify-content-start ms-0 mb-0">
-                    @foreach($testimonials as $index => $testimonial)
-                        <button type="button" 
-                                data-bs-target="#reviewcarouselIndicators" 
-                                data-bs-slide-to="{{ $index }}" 
-                                class="{{ $index == 0 ? 'active' : '' }}" 
-                                aria-current="{{ $index == 0 ? 'true' : 'false' }}" 
-                                aria-label="Slide {{ $index + 1 }}">
-                        </button>
-                    @endforeach
-                </div>
-
-                <!-- Isi Carousel -->
-                <div class="carousel-inner">
-                    @foreach($testimonials as $index => $testimonial)
-                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                            <div class="testi-contain text-white">
-                                <i class="bx bxs-quote-alt-left text-success display-6"></i>
-
-                                <h4 class="mt-4 fw-medium lh-base text-white">
-                                    “{{ $testimonial->message }}”
-                                </h4>
-
-                                <div class="mt-4 pt-3 pb-5">
-                                    <div class="d-flex align-items-start">
-                                        <div class="flex-shrink-0">
-                                            <img src="{{ $testimonial->image ? asset('storage/'.$testimonial->image) : asset('themes/minia/assets/images/users/avatar-1.jpg') }}" 
-                                                 class="avatar-md img-fluid rounded-circle" 
-                                                 alt="{{ $testimonial->name }}">
-                                        </div>
-                                        <div class="flex-grow-1 ms-3 mb-4">
-                                            <h5 class="font-size-18 text-white">{{ $testimonial->name }}</h5>
-                                            @if($testimonial->role)
-                                                <p class="mb-0 text-white-50">{{ $testimonial->role }}</p>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <!-- tidak ada tombol next/prev -->
-            </div>
-        </div>
-    </div>
-</div>
 
                                         <!-- end review carousel -->
                                     </div>
