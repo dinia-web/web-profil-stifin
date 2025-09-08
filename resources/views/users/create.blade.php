@@ -32,12 +32,7 @@
 
 <div class="mb-3">
 <label for="role" class="form-label">Role</label>
-<select name="role" class="form-select" required>
-<option value="">-- Pilih Role --</option>
-<option value="admin">Admin</option>
-<option value="dosen">Dosen</option>
-<option value="mahasiswa">Mahasiswa</option>
-</select>
+<input type="text" name="role" value="{{ old('role') }}" class="form-control" required>
 </div>
 
 <div class="mb-3">

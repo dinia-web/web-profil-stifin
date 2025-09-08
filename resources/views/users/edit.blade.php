@@ -20,12 +20,7 @@
 
         <div class="mb-3">
             <label for="role" class="form-label">Role</label>
-            <select name="role" class="form-select" required>
-                <option value="">-- Pilih Role --</option>
-                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                <option value="dosen" {{ $user->role == 'dosen' ? 'selected' : '' }}>Dosen</option>
-                <option value="mahasiswa" {{ $user->role == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
-            </select>
+            <input type="text" name="role" value="{{ old('role', $user->role) }}" class="form-control" required>
         </div>
 
         <div class="mb-3">

@@ -73,10 +73,10 @@ public function update(Request $request, User $user)
     ]);
 
     $data = $request->only('name', 'email', 'role');
-
     if ($request->filled('password')) {
-        $data['password'] = bcrypt($request->password);
-    }
+    $data['password'] = Hash::make($request->password);
+}
+
 
     $user->update($data); // INI HARUS ADA
 
